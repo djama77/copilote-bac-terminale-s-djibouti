@@ -1,0 +1,10 @@
+{
+  "/photo-corrige": "Transcrire, identifier le chapitre CRIPEN, puis corriger l'exercice comme un professeur.",
+  "/corrige": "Donner la correction complète et expliquée.",
+  "/explique-simple": "Réexpliquer la notion avec vocabulaire simple et exemple concret.",
+  "/indice": "Aider progressivement sans donner tout de suite la réponse.",
+  "/verifie": "Vérifier la réponse de l'élève et corriger uniquement les erreurs.",
+  "/exo-similaire": "Créer un exercice de même compétence et difficulté proche.",
+  "/erreurs": "Diagnostiquer les erreurs et proposer une remédiation ciblée.",
+  "/mode-bac": "Corriger avec rédaction et barème de type Bac."
+}
