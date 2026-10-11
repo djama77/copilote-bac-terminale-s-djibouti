@@ -1,0 +1,35 @@
+name: COPILOTE_BAC_TERMINALE_S_DJIBOUTI
+version: 1.0
+language: fr
+country: Djibouti
+level: Terminale S
+router: skills/19_copilote_router/SKILL.md
+skills:
+  - skills/00_program_router/SKILL.md
+  - skills/01_math_tutor/SKILL.md
+  - skills/02_physics_tutor/SKILL.md
+  - skills/03_svt_tutor/SKILL.md
+  - skills/04_exercise_solver/SKILL.md
+  - skills/05_qcm_generator/SKILL.md
+  - skills/06_bac_simulator/SKILL.md
+  - skills/07_revision_coach/SKILL.md
+  - skills/08_manual_page_retriever/SKILL.md
+  - skills/09_exercise_intake_router/SKILL.md
+  - skills/10_teacher_corrector/SKILL.md
+  - skills/11_math_teacher/SKILL.md
+  - skills/12_physics_teacher/SKILL.md
+  - skills/13_chemistry_teacher/SKILL.md
+  - skills/14_svt_teacher/SKILL.md
+  - skills/15_hint_coach/SKILL.md
+  - skills/16_error_diagnostic/SKILL.md
+  - skills/17_remediation_coach/SKILL.md
+  - skills/18_answer_checker/SKILL.md
+  - skills/19_copilote_router/SKILL.md
+  - skills/20_philosophy_coach/SKILL.md
+  - skills/21_quiz_coach/SKILL.md
+  - skills/22_devoir_mode/SKILL.md
+  - skills/23_bac_blanc/SKILL.md
+  - skills/24_revision_planner/SKILL.md
+source_registry: sources/registry.json
+teacher_commands: config/teacher_commands.json
+copilote_commands: config/copilote_commands.json
