@@ -1,0 +1,8 @@
+levels:
+  debutant:
+    goal: "Comprendre avec des mots simples, exemples concrets et étapes courtes."
+  terminale:
+    goal: "Respecter le vocabulaire, les méthodes et la rigueur attendus en classe."
+  bac:
+    goal: "Produire une résolution et une rédaction conformes à une copie d'examen."
+default_level: terminale
