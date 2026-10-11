@@ -1,0 +1,39 @@
+{
+  "name": "CRIPEN Terminale S Source Registry",
+  "version": "1.0",
+  "official_sources": [
+    {
+      "id": "program_terminal",
+      "title": "Programme de l'enseignement secondaire - Classe de Terminale",
+      "publisher": "CRIPEN / MENFOP - République de Djibouti",
+      "url": "https://cripen.dj/wp-content/uploads/2025/05/Programme-compile-Terminale.pdf",
+      "priority": 1,
+      "use": ["curriculum_alignment", "chapter_detection", "competency_mapping"]
+    },
+    {
+      "id": "bac_series_s",
+      "title": "Annales BAC - Série S",
+      "publisher": "CRIPEN",
+      "url": "https://cripen.dj/index.php/serie-s/",
+      "priority": 2,
+      "use": ["exam_style", "past_papers", "corrections", "bac_simulation"]
+    },
+    {
+      "id": "cripen_portal",
+      "title": "Portail officiel CRIPEN",
+      "publisher": "CRIPEN",
+      "url": "https://cripen.dj/",
+      "priority": 3,
+      "use": ["official_resources", "source_verification"]
+    },
+    {
+      "id": "support_school",
+      "title": "Soutien scolaire CRIPEN",
+      "publisher": "CRIPEN",
+      "url": "https://cripen.dj/index.php/soutien-scolaire/",
+      "priority": 4,
+      "use": ["lesson_support", "video_reference"]
+    }
+  ],
+  "local_corpus_patterns": ["corpus/math/*.pdf", "corpus/physics/*.pdf", "corpus/svt/*.pdf", "corpus/bac/*.pdf"]
+}
