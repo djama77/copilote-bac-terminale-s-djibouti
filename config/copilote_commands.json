@@ -1,0 +1,18 @@
+{
+  "commands": {
+    "/cours": "Expliquer un chapitre ou une notion au niveau Terminale S.",
+    "/photo-corrige": "Lire une photo et corriger l'exercice.",
+    "/transcription": "Transcrire fidèlement sans résoudre.",
+    "/corrige": "Donner un corrigé complet et pédagogique.",
+    "/corrige-court": "Donner une correction courte : formule, calcul, résultat.",
+    "/explique-simple": "Expliquer avec des mots simples et un exemple.",
+    "/indice": "Donner des indices progressifs.",
+    "/verifie": "Vérifier une tentative et repérer la première erreur.",
+    "/exo-similaire": "Créer un exercice analogue.",
+    "/quiz": "Créer un quiz de révision.",
+    "/mode-devoir": "Accompagner un devoir sans donner immédiatement toute la solution.",
+    "/bac-blanc": "Créer une simulation d'épreuve avec barème indicatif.",
+    "/revision": "Organiser une séance de révision.",
+    "/philo": "Répondre en philosophie au niveau lycée."
+  }
+}
