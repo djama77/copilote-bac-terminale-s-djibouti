@@ -17,3 +17,11 @@ Internet est requis pour installer les dépendances et télécharger le modèle.
 - Les réponses peuvent être erronées : vérifier avec les ressources officielles.
 - Aucun fichier de poids de modèle inclus.
 - Adresse locale par défaut : 127.0.0.1:11434. Éviter une adresse externe pour les données privées.
+
+## Recherche documentaire V2
+- Importer plusieurs PDF texte ou TXT, jusqu'à 5 Mo par fichier.
+- Extraction des 80 premières pages par PDF (plafond 200 000 caractères par document).
+- Recherche locale simple par mots-clés, jusqu'à quatre extraits pertinents par question.
+- Affichage du nom du fichier et du numéro de page dans l'interface et dans le contexte envoyé à Qwen3.
+- Les références de page sont des aides de navigation : vérifier le document original. L'IA peut produire des citations erronées.
+- Aucune OCR et aucun index persistant à ce stade. Les fichiers doivent être réimportés à chaque session.
