@@ -4,6 +4,7 @@ import requests
 from pathlib import Path
 from io import BytesIO
 from document_search import chunks_from_upload, search
+from photo_ocr import read_exercise_image
 import streamlit as st
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
@@ -57,8 +58,22 @@ if chunks:
     st.success(f"{len(uploads)} document(s), {len(chunks)} extraits indexés pour cette session.")
     st.caption("Recherche locale par mots-clés, sans base vectorielle. Les PDF scannés nécessitent une OCR.")
 
-question = st.chat_input("Pose ta question ou colle un exercice…")
+st.subheader("📷 Photo d'exercice")
+photo = st.file_uploader("Importer une photo JPG ou PNG (OCR locale)", type=["jpg", "jpeg", "png"], key="exercise_photo")
+ocr_text = ""
+if photo is not None:
+    try:
+        ocr_text = read_exercise_image(photo)
+        if ocr_text:
+            ocr_text = st.text_area("Vérifiez et corrigez le texte reconnu avant de demander la correction", value=ocr_text, height=160)
+        else:
+            st.warning("Aucun texte reconnu. Essayez une photo plus nette ou recopiez l'énoncé.")
+    except Exception as exc:
+        st.warning(f"OCR indisponible : {exc}. Vérifiez l'installation de Tesseract et du pack français.")
+question = st.chat_input("Pose ta question ou demande de corriger la photo…")
 if question:
+    if ocr_text.strip():
+        question = question + "\\n\\nÉnoncé transcrit depuis une photo (à vérifier, peut comporter des erreurs) :\\n" + ocr_text.strip()
     st.session_state.history.append({"role": "user", "content": question})
     with st.chat_message("user"):
         st.markdown(question)
