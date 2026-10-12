@@ -25,3 +25,11 @@ Internet est requis pour installer les dépendances et télécharger le modèle.
 - Affichage du nom du fichier et du numéro de page dans l'interface et dans le contexte envoyé à Qwen3.
 - Les références de page sont des aides de navigation : vérifier le document original. L'IA peut produire des citations erronées.
 - Aucune OCR et aucun index persistant à ce stade. Les fichiers doivent être réimportés à chaque session.
+
+## Correction des photos (OCR expérimentale)
+1. Installer **Tesseract OCR pour Windows** (moteur natif séparé de Python) et sélectionner la langue française lors de l'installation. Site du projet : https://github.com/tesseract-ocr/tesseract
+2. Vérifier dans PowerShell : `tesseract --version` puis `tesseract --list-langs` (doit afficher `fra` et `eng`).
+3. Redémarrer le terminal après installation pour actualiser le PATH. Si nécessaire, définir la variable d'environnement `TESSDATA_PREFIX` vers le dossier tessdata approprié.
+4. Lancer `lancer_windows.bat`, importer une photo JPG/PNG (8 Mo maximum), vérifier le texte reconnu, puis demander une correction.
+
+**Attention :** la transcription de formules mathématiques et de manuscrits peut être erronée. Ne pas se fier à la correction sans vérifier l'énoncé et les calculs. Aucune photographie n'est conservée par le code applicatif après la session; les mécanismes de stockage de Streamlit et du système hôte restent à considérer.
