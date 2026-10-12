@@ -36,6 +36,15 @@ system = (
 for msg in st.session_state.history:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
+with st.expander("📚 Sources officielles CRIPEN — Djibouti"):
+    st.markdown(
+        "- [Programme officiel Terminale (PDF)](https://cripen.dj/wp-content/uploads/2025/05/Programme-compile-Terminale.pdf)\\n"
+        "- [Annales Bac série S : sujets et corrigés](https://cripen.dj/index.php/serie-s/)\\n"
+        "- [Annales Bac S 2017 (PDF)](https://cripen.dj/wp-content/uploads/2026/03/Annales-Bac-S-2017.pdf)\\n"
+        "- [Vidéos de soutien scolaire](https://cripen.dj/index.php/soutien-scolaire/)\\n"
+        "- [Portail numérique MENFOP](https://www.education.dj/portail/)"
+    )
+    st.caption("Ouvrez une source officielle, puis importez le PDF obtenu ci-dessous. Aucun document protégé n'est redistribué.")
 st.subheader("Documents de cours")
 upload = st.file_uploader("Ajouter un cours PDF texte ou TXT (local, 5 Mo max)", type=["pdf", "txt"])
 reference = ""
