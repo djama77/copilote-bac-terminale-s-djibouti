@@ -12,7 +12,8 @@ Internet est requis pour installer les dépendances et télécharger le modèle.
 - Choix de matière et de mode (cours, indice, correction, quiz, exercice similaire, bac blanc).
 - Historique de session uniquement; effacé au redémarrage ou via Nouvelle conversation.
 - Les skills du dépôt sont une référence pédagogique; ce prototype ne les charge pas automatiquement.
-- Pas de reconnaissance de photo, d'import PDF ou de moteur de vérification mathématique à ce stade.
+- Import PDF contenant du texte et TXT (5 Mo maximum, 30 premières pages, 12 000 caractères). Pas d'OCR pour photos ou PDF scannés, ni de moteur de vérification mathématique à ce stade.
+- Les documents sont traités en mémoire pour la session et envoyés à l'instance Ollama configurée.
 - Les réponses peuvent être erronées : vérifier avec les ressources officielles.
 - Aucun fichier de poids de modèle inclus.
 - Adresse locale par défaut : 127.0.0.1:11434. Éviter une adresse externe pour les données privées.
