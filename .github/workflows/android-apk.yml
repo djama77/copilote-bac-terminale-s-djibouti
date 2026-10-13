@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/android-capacitor-apk-v1
+      - feature/gemini-tutor-replace-qwen-v1
   workflow_dispatch:
 
 permissions:
@@ -36,6 +37,8 @@ jobs:
       - name: Install web dependencies
         run: npm install --no-audit --no-fund
       - name: Build Vite web app
+        env:
+          VITE_TUTOR_API_URL: ${{ vars.TUTOR_API_URL }}
         run: npm run build
       - name: Generate Android project
         run: npx cap add android
