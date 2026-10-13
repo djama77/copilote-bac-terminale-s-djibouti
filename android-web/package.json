@@ -1,0 +1,22 @@
+{
+  "name": "copilote-bac-s-android",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "android:sync": "npm run build && cap sync android",
+    "android:add": "npm run build && cap add android",
+    "android:open": "cap open android"
+  },
+  "dependencies": {
+    "vite": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/android": "^6.2.0"
+  }
+}
