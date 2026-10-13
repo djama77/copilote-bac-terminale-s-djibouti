@@ -5,6 +5,7 @@ on:
     branches:
       - feature/android-capacitor-apk-v1
       - feature/gemini-tutor-replace-qwen-v1
+      - feature/groq-playstore-one-time-v1
   workflow_dispatch:
 
 permissions:
