@@ -5,6 +5,7 @@ on:
     branches:
       - feature/android-capacitor-apk-v1
       - feature/gemini-tutor-replace-qwen-v1
+      - feature/groq-playstore-one-time-v1
   workflow_dispatch:
 
 permissions:
@@ -45,6 +46,16 @@ jobs:
       - name: Compile debug APK
         run: bash ./gradlew assembleDebug --no-daemon
         working-directory: android-web/android
+      - name: Compile unsigned release AAB (not Play Store ready)
+        run: bash ./gradlew bundleRelease --no-daemon
+        working-directory: android-web/android
+      - name: Upload unsigned release AAB for inspection
+        uses: actions/upload-artifact@v4
+        with:
+          name: copilote-bac-s-unsigned-aab-NOT-FOR-PUBLISHING
+          path: android-web/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: error
+          retention-days: 14
       - name: Verify APK and generate SHA-256 checksum
         run: |
           set -euo pipefail
