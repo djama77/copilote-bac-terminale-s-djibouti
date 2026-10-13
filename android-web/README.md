@@ -1,31 +1,22 @@
-# Copilote Bac S Djibouti — Gemini (Android / PWA)
+# Copilote Bac S Djibouti — Groq + Android
 
-Application expérimentale Vite + Capacitor : Mathématiques, Physique, Chimie, SVT et Philosophie.
+## Modèle commercial retenu
+Achat unique envisagé de **500 FDJ** sur Google Play, sans abonnement. Le prix effectif et la disponibilité en FDJ doivent être confirmés dans Google Play Console. **Le prix n'est pas encodé dans l'APK** : il est défini dans Play Console.
 
-## Nouvelle IA : Gemini, sans Qwen3 ni Ollama
-Le client envoie un JSON `{subject, mode, question}` à une API HTTPS. Le serveur Vercel `api/tutor.js` appelle Gemini avec `GEMINI_API_KEY` côté serveur uniquement. La clé ne doit jamais être stockée dans GitHub ni dans l'APK.
+## API d'IA
+Backend : `api/tutor.js`, Groq API compatible OpenAI, modèle par défaut `openai/gpt-oss-20b`. Déployer Vercel avec root directory `android-web`. Définir la variable serveur **GROQ_API_KEY** (secret) et, si nécessaire, **GROQ_MODEL**. Ne jamais intégrer la clé dans l'APK ou le dépôt.
 
-### Configuration serveur Vercel
-- Root Directory : `android-web`.
-- Variable d'environnement **secrète** : `GEMINI_API_KEY` (clé personnelle fournie par Google AI Studio).
-- Facultatif : `GEMINI_MODEL` (par défaut `gemini-2.5-flash`).
-- Facultatif : `ALLOWED_ORIGIN` pour autoriser explicitement une origine web. Une origine CORS ne remplace pas une authentification.
-- Déployer le projet Vercel depuis cette branche ou une branche qui contient ces fichiers.
-- Vérifier l'API HTTPS : POST `https://votre-domaine.vercel.app/api/tutor` avec `Content-Type: application/json`.
+Configurer la variable GitHub Actions **TUTOR_API_URL** vers `https://votre-domaine.vercel.app/api/tutor`, puis reconstruire l'APK. Sans cette configuration, l'assistant de l'APK n'est pas connecté. La sélection photo existe mais l'OCR n'est pas activé.
 
-### Configuration APK GitHub Actions
-Dans **GitHub → Settings → Secrets and variables → Actions → Variables**, créer `TUTOR_API_URL` avec la valeur publique **HTTPS** de l'API, par exemple `https://votre-domaine.vercel.app/api/tutor`. Ce n'est pas une clé secrète. Le workflow l'intègre dans l'APK au build. Sans cette variable, l'APK ne peut pas appeler l'API distante et l'assistant reste indisponible.
+## Sécurité et viabilité indispensables avant lancement public
+**Attention : l'achat Play Store n'authentifie pas les requêtes envoyées à une API publique.** Le backend actuel est un prototype sans contrôle d'accès ni quotas persistants. Ne pas déployer l'API Groq publiquement tant qu'une authentification serveur, une vérification du droit d'accès et un quota mensuel par utilisateur n'ont pas été implémentés. Le quota cible proposé est 100 questions par mois, mais **il n'est pas encore appliqué**. Prévoir suivi des dépenses et alertes de budget.
 
-### Limitations actuelles
-- La sélection de photos existe, mais l'OCR et l'analyse d'images sont désactivés : saisir l'énoncé en texte.
-- Les références CRIPEN sont des liens ; les PDF ne sont pas encore indexés pour fournir des réponses sourcées.
-- Prévoir authentification, limitation des requêtes et plafonds de consommation avant diffusion publique : l'endpoint peut générer des coûts.
-- Une clé Gemini et son quota sont nécessaires ; aucun appel IA n'est actif sans configuration.
-- APK debug destiné aux tests, pas au Play Store.
+## Publication Google Play
+La compilation GitHub actuelle produit un **APK debug pour tests**, non publiable comme application payante. Pour Play Store, il faudra générer un **AAB release signé**, protéger le keystore dans les secrets GitHub, configurer Play Console (compte développeur, prix, fiche, politique de confidentialité, classification, conformité), puis tester sur des appareils réels. Ne pas publier automatiquement.
 
 ## Inspirations
-- https://github.com/towardsai/ai-tutor-app (tutorat et architecture de backend)
-- https://github.com/AdityaRathore70677/edurag-ai-learning-platform (tuteur multi-fournisseurs, quiz)
-- https://github.com/saiffOP/RAG-AI-Tutor (références aux pages PDF, pour une étape future)
+- https://github.com/henryhale/android-capacitor
+- https://github.com/Narottam04/action-capacitor-android
+- https://github.com/towardsai/ai-tutor-app
 
-Les fonctionnalités sont adaptées et réécrites ; aucune copie de code tiers n'est nécessaire dans cette version.
+Aucun code de ces dépôts n'a été copié directement.
