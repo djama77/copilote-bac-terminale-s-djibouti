@@ -15,7 +15,21 @@ Le projet regroupe des skills pédagogiques pour :
 
 ## Skills
 
-Le dossier `skills/` contient les modules du Copilote Bac : routage, tutorat disciplinaire, correction, QCM, simulation Bac, diagnostic d'erreurs, remédiation, philosophie, quiz, devoirs et planification des révisions.
+Le dossier `skills/` contient désormais 35 modules. La V2 ajoute : analyse d'une photo de cours, comparaison au programme CRIPEN, fiche de révision, flashcards, carte mentale, quiz basé sur le cours, exercice type Bac, révision espacée, correction centrale d'exercices photo et référence Mathématiques CRIPEN.
+
+### Fonctions V2
+- `/photo-corrige` : correction complète d'un exercice à partir d'une photo.
+- `/analyse-cours` : analyse d'une page de cours photographiée.
+- `/compare-programme` : comparaison avec le programme CRIPEN.
+- `/fiche-revision` : génération d'une fiche synthétique.
+- `/flashcards` : cartes Question/Réponse.
+- `/carte-mentale` : carte mentale textuelle.
+- `/quiz-cours` : quiz uniquement sur le cours étudié.
+- `/exo-type-bac` : exercice original niveau Bac S Djibouti.
+- `/revision-espacee` : réactivation progressive des notions déjà étudiées.
+
+### Mathématiques CRIPEN
+Le projet référence maintenant le programme officiel, le manuel élève « Mathématiques — Terminale Scientifique (S) » du CRIPEN (édition 2015), les annales Bac Série S et le soutien scolaire CRIPEN. Le manuel indique l'existence d'un guide pédagogique et/ou support numérique, mais aucun PDF public officiel du guide professeur de Mathématiques Terminale S n'a été retrouvé de façon fiable lors de la recherche du 14 octobre 2026. Le dépôt prévoit donc un emplacement local pour l'ajouter si l'utilisateur le possède légalement.
 
 ## Commandes utiles
 
