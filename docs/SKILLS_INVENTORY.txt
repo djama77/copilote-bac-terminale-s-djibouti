@@ -22,4 +22,13 @@
 21_quiz_coach
 22_devoir_mode
 23_bac_blanc
-24_revision_planner
+25_course_photo_analyzer
+26_curriculum_gap_checker
+27_revision_sheet_builder
+28_flashcard_generator
+29_mindmap_builder
+30_course_quiz_generator
+31_bac_exercise_generator
+32_spaced_revision_engine
+33_photo_exercise_corrector
+34_math_cripen_reference
