@@ -13,6 +13,15 @@
     "/mode-devoir": "Accompagner un devoir sans donner immédiatement toute la solution.",
     "/bac-blanc": "Créer une simulation d'épreuve avec barème indicatif.",
     "/revision": "Organiser une séance de révision.",
-    "/philo": "Répondre en philosophie au niveau lycée."
+    "/philo": "Répondre en philosophie au niveau lycée.",
+    "/analyse-cours": "Analyser une photo de cours : transcription, matière, chapitre, notion et contenu présent.",
+    "/compare-programme": "Comparer le cours au programme officiel CRIPEN et signaler présent, à compléter, manquant ou hors périmètre.",
+    "/fiche-revision": "Créer une fiche de révision fidèle au cours et au programme CRIPEN.",
+    "/flashcards": "Créer des cartes Question/Réponse à partir du cours.",
+    "/carte-mentale": "Créer une carte mentale textuelle du chapitre.",
+    "/quiz-cours": "Créer un quiz uniquement à partir du cours étudié.",
+    "/exo-type-bac": "Créer un exercice original niveau Bac S Djibouti sur la compétence visée.",
+    "/revision-espacee": "Faire revenir progressivement les notions déjà étudiées.",
+    "/maths-cripen": "Utiliser le programme, le manuel CRIPEN Terminale S et les annales Bac S comme références Mathématiques."
   }
 }
