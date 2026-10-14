@@ -70,4 +70,16 @@ Une interface mobile-first est maintenant incluse à la racine du dépôt :
 ### Boutons principaux
 `/photo-corrige` · `/analyse-cours` · `/fiche-revision` · `/flashcards` · `/quiz-cours` · `/carte-mentale` · `/exo-type-bac` · `/compare-programme` · `/revision-espacee`
 
-> L'interface est fonctionnelle côté navigateur. La prochaine couche est la connexion du bouton **Envoyer** à une API IA réelle du Copilote.
+> Le bouton **Envoyer** est maintenant connecté à `/api/tutor`. La clé API reste exclusivement côté serveur.
+
+## Connexion IA sur Vercel
+
+Dans **Vercel → Project → Settings → Environment Variables**, ajouter :
+
+- `TUTOR_API_KEY` : clé privée du fournisseur IA ;
+- `TUTOR_MODEL` : nom du modèle disponible ;
+- `TUTOR_API_URL` : facultatif, par défaut `https://api.groq.com/openai/v1/chat/completions`.
+
+Pour **/photo-corrige**, choisir un modèle qui accepte les images. Les clés ne doivent jamais être placées dans `app.js` ou commitées dans GitHub.
+
+Après ajout/modification des variables Vercel, effectuer un nouveau déploiement.
