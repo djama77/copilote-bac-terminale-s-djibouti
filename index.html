@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="Copilote Bac Terminale S Djibouti — CRIPEN, correction photo, révision et entraînement." />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="/styles.css" />
+  <title>Copilote Bac Terminale S — Djibouti</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">TERMINALE S • DJIBOUTI</div>
+        <h1>Copilote Bac</h1>
+        <p>Ton assistant CRIPEN pour comprendre, réviser et corriger.</p>
+      </div>
+      <button id="installBtn" class="ghost-btn" hidden>Installer</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="badge">Mode élève</span>
+          <h2>Que veux-tu faire maintenant ?</h2>
+          <p>Choisis une action. Le Copilote prépare automatiquement la bonne commande.</p>
+        </div>
+        <div class="hero-icon">🎓</div>
+      </section>
+
+      <section class="quick-grid" aria-label="Actions principales">
+        <button class="action-card featured" data-command="/photo-corrige">
+          <span class="icon">📷</span>
+          <span class="title">Corriger un exercice</span>
+          <span class="desc">Photo → transcription → méthode → correction</span>
+        </button>
+
+        <button class="action-card" data-command="/analyse-cours">
+          <span class="icon">📖</span>
+          <span class="title">Analyser mon cours</span>
+          <span class="desc">Identifier chapitre, notions et contenu</span>
+        </button>
+
+        <button class="action-card" data-command="/fiche-revision">
+          <span class="icon">📘</span>
+          <span class="title">Fiche de révision</span>
+          <span class="desc">L’essentiel du cours, clair et court</span>
+        </button>
+
+        <button class="action-card" data-command="/flashcards">
+          <span class="icon">🧠</span>
+          <span class="title">Flashcards</span>
+          <span class="desc">Questions-réponses pour mémoriser</span>
+        </button>
+
+        <button class="action-card" data-command="/quiz-cours">
+          <span class="icon">❓</span>
+          <span class="title">Quiz du cours</span>
+          <span class="desc">5 ou 10 questions ciblées</span>
+        </button>
+
+        <button class="action-card" data-command="/carte-mentale">
+          <span class="icon">🗺️</span>
+          <span class="title">Carte mentale</span>
+          <span class="desc">Voir le chapitre en un coup d’œil</span>
+        </button>
+
+        <button class="action-card" data-command="/exo-type-bac">
+          <span class="icon">📝</span>
+          <span class="title">Exercice type Bac</span>
+          <span class="desc">Nouvel exercice niveau Bac S Djibouti</span>
+        </button>
+
+        <button class="action-card" data-command="/compare-programme">
+          <span class="icon">📋</span>
+          <span class="title">Comparer au programme</span>
+          <span class="desc">Présent, à compléter ou manquant</span>
+        </button>
+
+        <button class="action-card" data-command="/revision-espacee">
+          <span class="icon">🔁</span>
+          <span class="title">Révision espacée</span>
+          <span class="desc">Revoir les notions au bon moment</span>
+        </button>
+      </section>
+
+      <section class="subjects">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">MATIÈRES</span>
+            <h3>Choisir une matière</h3>
+          </div>
+        </div>
+        <div class="subject-row">
+          <button class="subject math" data-subject="Mathématiques">∑ <span>Maths</span></button>
+          <button class="subject physics" data-subject="Physique">⚛ <span>Physique</span></button>
+          <button class="subject chemistry" data-subject="Chimie">⚗ <span>Chimie</span></button>
+          <button class="subject svt" data-subject="SVT">🧬 <span>SVT</span></button>
+          <button class="subject philo" data-subject="Philosophie">💭 <span>Philo</span></button>
+        </div>
+      </section>
+
+      <section class="assistant-panel" id="assistantPanel">
+        <div class="assistant-head">
+          <div class="avatar">AI</div>
+          <div>
+            <strong>Assistant Copilote</strong>
+            <span id="statusText">Prêt</span>
+          </div>
+        </div>
+
+        <div class="composer">
+          <textarea id="promptInput" rows="3" placeholder="Exemple : /photo-corrige — corrige cet exercice étape par étape"></textarea>
+
+          <div class="attachments" id="attachmentPreview" hidden>
+            <img id="previewImage" alt="Aperçu de la photo sélectionnée" />
+            <button id="removeImage" class="remove" aria-label="Retirer la photo">×</button>
+          </div>
+
+          <div class="composer-actions">
+            <label class="upload-btn">
+              <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
+              📷 Ajouter une photo
+            </label>
+            <button id="sendBtn" class="send-btn">Envoyer</button>
+          </div>
+        </div>
+
+        <div class="demo-response" id="demoResponse" hidden>
+          <strong>Commande prête.</strong>
+          <p id="demoText"></p>
+          <small>Le moteur IA sera connecté ensuite via l’API du Copilote.</small>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navigation principale">
+      <button class="active">⌂<span>Accueil</span></button>
+      <button data-scroll="subjects">▦<span>Matières</span></button>
+      <button data-scroll="assistantPanel">✦<span>Assistant</span></button>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
