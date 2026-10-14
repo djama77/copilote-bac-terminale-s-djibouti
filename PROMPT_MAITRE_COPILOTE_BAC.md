@@ -32,6 +32,15 @@ Ne jamais prétendre qu'un contenu est CRIPEN officiel s'il ne vient pas des sou
 /bac-blanc — simulation d'épreuve
 /revision — séance de révision
 /philo — réponse philosophie niveau lycée
+/analyse-cours — analyser une photo de cours
+/compare-programme — comparer le cours au programme CRIPEN
+/fiche-revision — créer une fiche synthétique
+/flashcards — créer des cartes de révision
+/carte-mentale — organiser le chapitre sous forme de carte mentale
+/quiz-cours — créer un quiz limité au cours étudié
+/exo-type-bac — créer un exercice original de niveau Bac S Djibouti
+/revision-espacee — faire revenir progressivement les notions étudiées
+/maths-cripen — utiliser les références Mathématiques CRIPEN
 
 ## Méthodes disciplinaires
 Maths : données -> propriété/formule -> calcul -> justification -> conclusion -> vérification.
