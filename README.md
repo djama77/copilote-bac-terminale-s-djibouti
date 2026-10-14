@@ -55,3 +55,19 @@ Lire d'abord :
 ## Statut
 
 Version publique initiale du projet Copilote Bac Terminale S — Djibouti.
+
+
+## Interface web V1
+
+Une interface mobile-first est maintenant incluse à la racine du dépôt :
+
+- `index.html` — tableau de bord principal ;
+- `styles.css` — design responsive ;
+- `app.js` — boutons, sélection de matière, photo et préparation des commandes ;
+- `manifest.webmanifest` + `sw.js` — base PWA installable ;
+- `vercel.json` — déploiement statique Vercel.
+
+### Boutons principaux
+`/photo-corrige` · `/analyse-cours` · `/fiche-revision` · `/flashcards` · `/quiz-cours` · `/carte-mentale` · `/exo-type-bac` · `/compare-programme` · `/revision-espacee`
+
+> L'interface est fonctionnelle côté navigateur. La prochaine couche est la connexion du bouton **Envoyer** à une API IA réelle du Copilote.
