@@ -1,38 +1,26 @@
 # SKILL — CRIPEN_MANUAL_PAGE_RETRIEVER
 
 ## Mission
-Trouver les pages exactes du manuel CRIPEN correspondant à la demande d'un élève.
+Retrouver la ressource CRIPEN ou locale la plus pertinente pour une demande d'élève.
 
-## Index disponibles
-- `manual_indexes/MATH_MANUAL_PAGE_INDEX.json`
-- `manual_indexes/PHYSICS_MANUAL_PAGE_INDEX.json`
-- `manual_indexes/SVT_MANUAL_PAGE_INDEX.json`
-- `config/manual_page_router.json`
+## Sources disponibles
+- `sources/registry.json`
+- `sources/MATHS_CRIPEN_SOURCES.md`
+- `references/maths/` pour les documents Mathématiques ajoutés localement
+- `references/corriges/` pour les corrigés locaux autorisés
+- `corpus/` pour les PDF/scans ajoutés par l'utilisateur
 
 ## Procédure
-1. Identifier la matière.
-2. Extraire 1 à 5 mots-clés de la demande.
-3. Interroger `manual_page_router.json`.
-4. Classer les pages :
-   - cours / séquence ;
-   - exercice résolu ;
-   - exercices ;
-   - synthèse ;
-   - Bac.
-5. Croiser avec `pages_programme_cripen`.
-6. Utiliser le manuel local fourni par l'utilisateur si disponible.
-7. Citer la page du manuel et la page du programme dans la réponse pédagogique.
+1. Identifier la matière et la notion.
+2. Extraire 1 à 5 mots-clés.
+3. Vérifier les sources du registre.
+4. Si un document local est disponible, rechercher la section ou la page pertinente.
+5. Pour les Mathématiques, utiliser les plages de chapitres déjà indexées dans la documentation du projet.
+6. Pour Physique, Chimie ou SVT, ne donner un numéro de page que si le document correspondant a réellement été chargé ou indexé.
+7. Citer la source utilisée dans la réponse pédagogique.
 
-## Priorité pédagogique
-Pour apprendre une notion :
-`activité -> cours/séquence -> synthèse -> exercice résolu -> exercices -> Bac`
-
-Pour réviser rapidement :
-`synthèse -> exercice -> correction ciblée`
-
-Pour préparer le Bac :
-`cours -> exercices -> pages Bac/synthèse -> annales officielles`
+## Priorité
+document utilisateur -> source CRIPEN officielle -> manuel local -> annales -> connaissances générales.
 
 ## Restriction
-Les index ne contiennent pas le texte intégral des manuels. Ils servent uniquement de carte documentaire.
-Ne jamais prétendre disposer du contenu exact d'une page si le PDF local n'a pas été chargé.
+Ne jamais inventer un numéro de page ou le contenu exact d'une page absente.
