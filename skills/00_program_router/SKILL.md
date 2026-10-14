@@ -7,52 +7,33 @@ Identifier la matière, le chapitre, la compétence et le skill à appeler.
 Question, photo, exercice, demande de cours, QCM ou préparation Bac.
 
 ## Procédure
-1. Détecter la matière : Maths / Physique-Chimie / SVT.
+1. Détecter la matière : Maths / Physique / Chimie / SVT / Philosophie.
 2. Détecter le chapitre ou la notion.
-3. Vérifier l'alignement dans le programme officiel CRIPEN.
-4. Chercher d'abord un document CRIPEN local pertinent.
+3. Vérifier l'alignement dans le programme officiel CRIPEN quand la matière est couverte par les sources du projet.
+4. Chercher d'abord un document CRIPEN ou un document local fourni par l'utilisateur.
 5. Router vers le skill spécialisé.
-6. Si la notion n'est pas clairement au programme, le signaler et traiter comme complément.
+6. Si la notion n'est pas clairement couverte par une source CRIPEN disponible, le signaler comme complément.
 
 ## Routage
-- Maths -> CRIPEN_MATH_TUTOR
-- Physique/Chimie -> CRIPEN_PHYSICS_TUTOR
+- Maths -> CRIPEN_MATH_TUTOR + MATH_CRIPEN_REFERENCE
+- Physique -> CRIPEN_PHYSICS_TUTOR
+- Chimie -> CRIPEN_CHEMISTRY_TEACHER
 - SVT -> CRIPEN_SVT_TUTOR
-- Exercice à résoudre -> CRIPEN_EXERCISE_SOLVER
-- QCM -> CRIPEN_QCM_GENERATOR
-- Bac -> CRIPEN_BAC_SIMULATOR
-- Révision/plan -> CRIPEN_REVISION_COACH
+- Philosophie -> COPILOTE_PHILOSOPHIE
+- Photo d'exercice -> PHOTO_EXERCISE_CORRECTOR
+- Photo de cours -> COURSE_PHOTO_ANALYZER
+- Comparaison programme -> CRIPEN_CURRICULUM_GAP_CHECKER
+- Fiche -> REVISION_SHEET_BUILDER
+- Flashcards -> FLASHCARD_GENERATOR
+- Quiz du cours -> COURSE_QUIZ_GENERATOR
+- Exercice type Bac -> BAC_EXERCISE_GENERATOR
+- Révision espacée -> SPACED_REVISION_ENGINE
 
-## Sortie interne
-matiere:
-chapitre:
-competence:
-niveau:
-source_prioritaire:
-skill:
+## Sources de routage
+- `sources/registry.json`
+- `sources/MATHS_CRIPEN_SOURCES.md`
+- documents locaux placés dans `corpus/` et `references/`
+- annales officielles CRIPEN référencées dans le registre
 
-## V2 — Routage page par page obligatoire
-
-Avant de répondre à une demande de Mathématiques, Physique-Chimie ou SVT :
-
-1. rechercher la notion dans `config/page_router.json` ;
-2. récupérer la ou les pages du programme correspondantes ;
-3. enregistrer en contexte interne :
-   - `programme_page`
-   - `matiere`
-   - `theme`
-   - `competence`
-   - `skill`
-4. chercher ensuite le manuel/document local correspondant par titre et notion, pas seulement par numéro de chapitre ;
-5. si plusieurs pages correspondent, les classer de la plus directement pertinente à la plus contextuelle ;
-6. pour une génération de QCM/Bac, limiter les questions au périmètre des pages ciblées.
-
-### Format de routage interne V2
-programme_pages:
-matiere:
-theme:
-notions:
-competences:
-document_local:
-skill:
-mode: cours | exercice | correction | qcm | bac | revision
+## Règle
+Ne jamais citer une page précise d'un manuel non chargé ou non indexé dans le projet.
