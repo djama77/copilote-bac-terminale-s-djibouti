@@ -8,6 +8,8 @@ const attachmentPreview=document.getElementById("attachmentPreview");
 const removeImage=document.getElementById("removeImage");
 const demoResponse=document.getElementById("demoResponse");
 const demoText=document.getElementById("demoText");
+const responseTitle=document.getElementById("responseTitle");
+const responseNote=document.getElementById("responseNote");
 const statusText=document.getElementById("statusText");
 let selectedSubject="";
 let selectedFile=null;
@@ -51,17 +53,64 @@ removeImage.addEventListener("click",()=>{
   attachmentPreview.hidden=true;
 });
 
-sendBtn.addEventListener("click",()=>{
+function fileToDataUrl(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function setResponse(title,text,note=""){
+  responseTitle.textContent=title;
+  demoText.textContent=text;
+  responseNote.textContent=note;
+  demoResponse.hidden=false;
+}
+
+sendBtn.addEventListener("click",async()=>{
   const text=promptInput.value.trim();
   if(!text && !selectedFile){
     promptInput.focus();
     return;
   }
-  demoText.textContent=selectedFile
-    ? `${text || "/photo-corrige"} • Photo jointe prête pour analyse.`
-    : text;
-  demoResponse.hidden=false;
-  statusText.textContent="Commande préparée";
+
+  sendBtn.disabled=true;
+  sendBtn.textContent="Envoi…";
+  statusText.textContent="L’IA réfléchit…";
+  setResponse("Copilote Bac","Analyse en cours…","");
+
+  try{
+    const imageDataUrl=selectedFile ? await fileToDataUrl(selectedFile) : null;
+    const response=await fetch("/api/tutor",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        message:text || "/photo-corrige — Corrige cet exercice étape par étape.",
+        imageDataUrl,
+        subject:selectedSubject || null
+      })
+    });
+
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok){
+      throw new Error(data.error || "Impossible de joindre le moteur IA.");
+    }
+
+    setResponse("Réponse du Copilote",data.answer || "Aucune réponse.","");
+    statusText.textContent="Réponse reçue";
+  }catch(error){
+    setResponse(
+      "Connexion IA",
+      error?.message || "Une erreur est survenue.",
+      "Vérifiez TUTOR_API_KEY, TUTOR_MODEL et TUTOR_API_URL dans Vercel."
+    );
+    statusText.textContent="Erreur";
+  }finally{
+    sendBtn.disabled=false;
+    sendBtn.textContent="Envoyer";
+  }
 });
 
 document.querySelectorAll("[data-scroll]").forEach(btn=>{
