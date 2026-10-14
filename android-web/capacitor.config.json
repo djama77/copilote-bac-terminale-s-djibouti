@@ -1,6 +1,6 @@
 {
-  "appId": "dj.instads.copilotebacs",
-  "appName": "Copilote Bac S Djibouti",
+  "appId": "dj.djama.copilotebac.personal",
+  "appName": "Mon Copilote Bac",
   "webDir": "dist",
   "server": {
     "androidScheme": "https"
