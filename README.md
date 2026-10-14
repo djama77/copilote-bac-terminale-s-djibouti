@@ -15,7 +15,7 @@ Le projet regroupe des skills pédagogiques pour :
 
 ## Skills
 
-Le dossier `skills/` contient désormais 35 modules. La V2 ajoute : analyse d'une photo de cours, comparaison au programme CRIPEN, fiche de révision, flashcards, carte mentale, quiz basé sur le cours, exercice type Bac, révision espacée, correction centrale d'exercices photo et référence Mathématiques CRIPEN.
+Le dossier `skills/` contient désormais 34 modules. La V2 ajoute : analyse d'une photo de cours, comparaison au programme CRIPEN, fiche de révision, flashcards, carte mentale, quiz basé sur le cours, exercice type Bac, révision espacée, correction centrale d'exercices photo et référence Mathématiques CRIPEN.
 
 ### Fonctions V2
 - `/photo-corrige` : correction complète d'un exercice à partir d'une photo.
