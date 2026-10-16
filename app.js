@@ -39,7 +39,7 @@ subjectButtons.forEach(btn=>{
 photoInput.addEventListener("change",e=>{
   selectedFile=e.target.files?.[0]||null;
   if(!selectedFile)return;
-  const url=URL.createObjectURL(selectedFile);
+  if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){\n    selectedFile=null; photoInput.value=""; statusText.textContent="Choisir une image de moins de 4 Mo"; return;\n  }\n  const url=URL.createObjectURL(selectedFile);
   preview.src=url;
   attachmentPreview.hidden=false;
   if(!promptInput.value.trim()) promptInput.value="/photo-corrige — ";
@@ -137,5 +137,5 @@ installBtn.addEventListener("click",async()=>{
 });
 
 if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));
+  window.addEventListener("load",()=>navigator.serviceWorker.register(new URL("./sw.js", document.baseURI).href).catch(()=>{}));
 }
