@@ -1,8 +1,9 @@
 {
   "name": "Copilote Bac Terminale S Djibouti",
   "short_name": "Copilote Bac",
-  "description": "Assistant CRIPEN pour Terminale S à Djibouti.",
-  "start_url": "/",
+  "description": "Assistant pédagogique pour la Terminale S à Djibouti.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#07101f",
   "theme_color": "#0b1220",
