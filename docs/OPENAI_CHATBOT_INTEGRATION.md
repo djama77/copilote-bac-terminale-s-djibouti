@@ -1,25 +1,24 @@
-# Copilote BAC — intégration du chatbot OpenAI (V1)
-## Statut
-Cette branche ajoute un point d'entrée serveur `POST /api/chat` pour Vercel. Elle ne remplace pas les tuteurs existants et ne modifie pas l'interface actuelle.
+# OpenAI dans Copilote BAC (V1)
 
-## Configuration
-Dans Vercel > Project > Settings > Environment Variables, ajouter `OPENAI_API_KEY` (secret). Optionnel : `OPENAI_MODEL=gpt-4.1-mini`. Ne jamais placer la clé dans le code client, le dépôt, ni dans une variable `VITE_*`.
+L'application utilise déjà `POST /api/tutor`. La branche conserve ce point d'entrée et ajoute **facultativement** OpenAI, sans interrompre le fournisseur existant.
 
-## Exemple de requête
-```js
-const response = await fetch("/api/chat", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ message: "Explique 4^767 modulo 7", history: [] })
-});
-const { answer, error } = await response.json();
-```
+## Activer OpenAI sur Vercel
+Dans les variables d'environnement **serveur** :
+- `TUTOR_PROVIDER=openai`
+- `OPENAI_API_KEY` : clé secrète, jamais dans GitHub ni dans le navigateur
+- `OPENAI_MODEL=gpt-4.1-mini` (facultatif ; choisir un modèle disponible, compatible avec les images)
 
-## Conditions avant activation publique
-- Vérifier la compatibilité du routage Vercel et des règles de réécriture existantes.
-- Ajouter authentification ou limitation de débit par utilisateur/IP, quotas et surveillance des coûts.
-- Tester les réponses, les erreurs réseau et l'affichage mobile.
-- Ajouter le composant de chat dans l'interface existante, après audit de ses fichiers.
-- Prévoir consentement et protection des données des élèves.
-- Pour les anciennes discussions : exporter, trier, anonymiser, puis indexer seulement les ressources pédagogiques autorisées (RAG). L'API n'accède pas automatiquement aux conversations ChatGPT.
-- Conserver les fonctionnalités et le mode hors ligne actuels. L'API nécessite Internet.
+Redéployer. Sans `TUTOR_PROVIDER=openai`, les variables existantes `TUTOR_API_URL`, `TUTOR_API_KEY`, `TUTOR_MODEL` continuent d'être utilisées.
+
+Le navigateur envoie déjà les questions, matières et photos à `/api/tutor`. La nouvelle route indépendante `/api/chat` est expérimentale et ne remplace pas ce fonctionnement.
+
+## Précautions de mise en production
+La version présente n'a pas encore de limitation des requêtes, d'authentification, ni de contrôle de budget. Ne pas activer publiquement une clé payante avant ces protections. Prévoir en priorité un quota côté serveur et une protection contre les appels automatisés.
+
+Les conversations historiques ne sont pas automatiquement disponibles dans l'API OpenAI. Exporter, sélectionner, anonymiser et indexer uniquement les documents pédagogiques autorisés. Ne jamais mettre des conversations personnelles ou des données d'élèves dans un dépôt public.
+
+## Vérifications
+- Vérifier que `/api/tutor` fonctionne toujours avec les variables TUTOR_* existantes.
+- Vérifier le mode OpenAI avec texte puis photo.
+- Vérifier le refus des images non valides et les erreurs sans clé.
+- Vérifier le déploiement Vercel et l'interface Android/PWA.
