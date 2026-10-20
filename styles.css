@@ -2,3 +2,13 @@
 .demo-response p{white-space:pre-wrap;line-height:1.6}
 .send-btn:disabled{opacity:.65;cursor:wait}
 .subject.selected{border-color:#2dd4bf;background:#102b35}
+
+
+/* Chatbot OpenAI */
+.assistant-tools{display:flex;justify-content:flex-end;margin:0 0 10px}
+.chat-history{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow:auto;margin:10px 0 14px;padding:4px}
+.chat-bubble{max-width:88%;padding:10px 12px;border-radius:14px}
+.chat-bubble strong{display:block;font-size:.78rem;margin-bottom:4px;opacity:.75}
+.chat-bubble p{margin:0;white-space:pre-wrap;line-height:1.45}
+.chat-bubble.user{align-self:flex-end;background:#0f766e;color:white;border-bottom-right-radius:4px}
+.chat-bubble.assistant{align-self:flex-start;background:#e8eef7;color:#142033;border-bottom-left-radius:4px}
