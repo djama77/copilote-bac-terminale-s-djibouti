@@ -72,14 +72,43 @@ Une interface mobile-first est maintenant incluse à la racine du dépôt :
 
 > Le bouton **Envoyer** est maintenant connecté à `/api/tutor`. La clé API reste exclusivement côté serveur.
 
-## Connexion IA sur Vercel
+## Chatbot ChatGPT / OpenAI API
 
-Dans **Vercel → Project → Settings → Environment Variables**, ajouter :
+Le bouton **Envoyer** utilise désormais directement l'API OpenAI côté serveur via `/api/tutor`.
 
-- `TUTOR_API_KEY` : clé privée du fournisseur IA ;
-- `TUTOR_MODEL` : nom du modèle disponible ;
-- `TUTOR_API_URL` : facultatif, par défaut `https://api.groq.com/openai/v1/chat/completions`.
+Fonctions :
+- conversation multi-tours avec un `conversationId` OpenAI ;
+- historique local dans le navigateur / WebView Android ;
+- bouton **Nouvelle conversation** ;
+- envoi de photos pour les exercices ;
+- conservation des 34 Skills et des commandes pédagogiques existantes ;
+- clé OpenAI jamais exposée dans le navigateur ou dans l'APK.
 
-Pour **/photo-corrige**, choisir un modèle qui accepte les images. Les clés ne doivent jamais être placées dans `app.js` ou commitées dans GitHub.
+L'intégration utilise l'API **Responses** et les **Conversations** OpenAI.
 
-Après ajout/modification des variables Vercel, effectuer un nouveau déploiement.
+### Variables serveur
+
+Dans l'hébergeur du backend, ajouter :
+
+- `OPENAI_API_KEY` : clé API OpenAI privée ;
+- `OPENAI_MODEL` : modèle à utiliser, par exemple `gpt-6-luna`.
+
+Ne jamais placer `OPENAI_API_KEY` dans `app.js`, GitHub Actions publiques ou l'APK.
+
+### Architecture
+
+```
+Android / PWA
+   ↓
+/api/tutor
+   ↓
+OpenAI Responses API
+   ↓
+Conversation OpenAI
+   ↓
+Réponse ChatGPT
+```
+
+Pour l'application Capacitor Android, le backend autorise également les origines locales habituelles de la WebView (`https://localhost`, `http://localhost`, `capacitor://localhost`).
+
+Après modification des variables d'environnement, redéployer le backend.
