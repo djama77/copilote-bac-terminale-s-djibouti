@@ -14,9 +14,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Méthode non autorisée." });
   }
 
-  const apiUrl = process.env.TUTOR_API_URL || "https://api.groq.com/openai/v1/chat/completions";
-  const apiKey = process.env.TUTOR_API_KEY;
-  const model = process.env.TUTOR_MODEL;
+  const useOpenAI = Boolean(process.env.OPENAI_API_KEY) && process.env.TUTOR_PROVIDER === "openai";
+  const apiUrl = useOpenAI ? "https://api.openai.com/v1/chat/completions" : (process.env.TUTOR_API_URL || "https://api.groq.com/openai/v1/chat/completions");
+  const apiKey = useOpenAI ? process.env.OPENAI_API_KEY : process.env.TUTOR_API_KEY;
+  const model = useOpenAI ? (process.env.OPENAI_MODEL || "gpt-4.1-mini") : process.env.TUTOR_MODEL;
 
   if (!apiKey || !model) {
     return res.status(500).json({
@@ -29,6 +30,9 @@ export default async function handler(req, res) {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const message = String(body.message || "").trim();
     const imageDataUrl = body.imageDataUrl ? String(body.imageDataUrl) : null;
+    if (imageDataUrl && !/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(imageDataUrl)) {
+      return res.status(400).json({ error: "Format de photo non accepté." });
+    }
 
     if (!message && !imageDataUrl) {
       return res.status(400).json({ error: "Ajoutez une question ou une photo." });
@@ -90,7 +94,7 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(500).json({
       error: "Erreur interne du Copilote.",
-      detail: error instanceof Error ? error.message : String(error)
+      detail: "Veuillez réessayer ultérieurement."
     });
   }
 }
