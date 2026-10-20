@@ -11,8 +11,46 @@ const demoText=document.getElementById("demoText");
 const responseTitle=document.getElementById("responseTitle");
 const responseNote=document.getElementById("responseNote");
 const statusText=document.getElementById("statusText");
+const chatHistory=document.getElementById("chatHistory");
+const newChatBtn=document.getElementById("newChatBtn");
+
 let selectedSubject="";
 let selectedFile=null;
+let conversationId=localStorage.getItem("copiloteConversationId") || null;
+let localMessages=JSON.parse(localStorage.getItem("copiloteMessages") || "[]");
+
+function saveMessages(){
+  localStorage.setItem("copiloteMessages", JSON.stringify(localMessages.slice(-40)));
+}
+
+function renderMessages(){
+  if(!chatHistory)return;
+  chatHistory.innerHTML="";
+  localMessages.forEach(msg=>{
+    const bubble=document.createElement("div");
+    bubble.className=`chat-bubble ${msg.role}`;
+    const label=document.createElement("strong");
+    label.textContent=msg.role==="user" ? "Deksan" : "Copilote";
+    const text=document.createElement("p");
+    text.textContent=msg.text;
+    bubble.append(label,text);
+    chatHistory.appendChild(bubble);
+  });
+  if(localMessages.length) chatHistory.scrollTop=chatHistory.scrollHeight;
+}
+renderMessages();
+
+newChatBtn?.addEventListener("click",()=>{
+  conversationId=null;
+  localMessages=[];
+  localStorage.removeItem("copiloteConversationId");
+  localStorage.removeItem("copiloteMessages");
+  renderMessages();
+  demoResponse.hidden=true;
+  statusText.textContent="Nouvelle conversation";
+  promptInput.value="";
+  promptInput.focus();
+});
 
 actionCards.forEach(card=>{
   card.addEventListener("click",()=>{
@@ -39,7 +77,13 @@ subjectButtons.forEach(btn=>{
 photoInput.addEventListener("change",e=>{
   selectedFile=e.target.files?.[0]||null;
   if(!selectedFile)return;
-  if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){\n    selectedFile=null; photoInput.value=""; statusText.textContent="Choisir une image de moins de 4 Mo"; return;\n  }\n  const url=URL.createObjectURL(selectedFile);
+  if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){
+    selectedFile=null;
+    photoInput.value="";
+    statusText.textContent="Choisir une image de moins de 4 Mo";
+    return;
+  }
+  const url=URL.createObjectURL(selectedFile);
   preview.src=url;
   attachmentPreview.hidden=false;
   if(!promptInput.value.trim()) promptInput.value="/photo-corrige — ";
@@ -76,9 +120,14 @@ sendBtn.addEventListener("click",async()=>{
     return;
   }
 
+  const userText=text || "/photo-corrige — Corrige cet exercice étape par étape.";
+  localMessages.push({role:"user",text:userText});
+  saveMessages();
+  renderMessages();
+
   sendBtn.disabled=true;
   sendBtn.textContent="Envoi…";
-  statusText.textContent="L’IA réfléchit…";
+  statusText.textContent="ChatGPT réfléchit…";
   setResponse("Copilote Bac","Analyse en cours…","");
 
   try{
@@ -87,30 +136,48 @@ sendBtn.addEventListener("click",async()=>{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
-        message:text || "/photo-corrige — Corrige cet exercice étape par étape.",
+        message:userText,
         imageDataUrl,
-        subject:selectedSubject || null
+        subject:selectedSubject || null,
+        conversationId
       })
     });
 
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
-      throw new Error(data.error || "Impossible de joindre le moteur IA.");
+      throw new Error(data.error || "Impossible de joindre l'API OpenAI.");
     }
 
-    setResponse("Réponse du Copilote",data.answer || "Aucune réponse.","");
+    conversationId=data.conversationId || conversationId;
+    if(conversationId) localStorage.setItem("copiloteConversationId",conversationId);
+
+    const answer=data.answer || "Aucune réponse.";
+    localMessages.push({role:"assistant",text:answer});
+    saveMessages();
+    renderMessages();
+
+    setResponse("Réponse du Copilote",answer,`Modèle : ${data.model || "OpenAI"}`);
     statusText.textContent="Réponse reçue";
+    promptInput.value="";
+    selectedFile=null;
+    photoInput.value="";
+    preview.src="";
+    attachmentPreview.hidden=true;
   }catch(error){
-    setResponse(
-      "Connexion IA",
-      error?.message || "Une erreur est survenue.",
-      "Vérifiez TUTOR_API_KEY, TUTOR_MODEL et TUTOR_API_URL dans Vercel."
-    );
+    const msg=error?.message || "Une erreur est survenue.";
+    localMessages.push({role:"assistant",text:`Erreur : ${msg}`});
+    saveMessages();
+    renderMessages();
+    setResponse("Connexion ChatGPT",msg,"Vérifiez OPENAI_API_KEY et OPENAI_MODEL sur le serveur.");
     statusText.textContent="Erreur";
   }finally{
     sendBtn.disabled=false;
     sendBtn.textContent="Envoyer";
   }
+});
+
+promptInput.addEventListener("keydown",e=>{
+  if((e.ctrlKey || e.metaKey) && e.key==="Enter") sendBtn.click();
 });
 
 document.querySelectorAll("[data-scroll]").forEach(btn=>{
