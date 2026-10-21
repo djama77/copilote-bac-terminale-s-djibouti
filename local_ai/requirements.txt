@@ -1,0 +1,5 @@
+streamlit>=1.35,<2
+requests>=2.31,<3
+pypdf>=5,<7
+Pillow>=10,<13
+pytesseract>=0.3.10,<1
