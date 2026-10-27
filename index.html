@@ -121,7 +121,7 @@
           <textarea id="promptInput" rows="3" placeholder="Exemple : /photo-corrige — corrige cet exercice étape par étape"></textarea>
 
           <div class="attachments" id="attachmentPreview" hidden>
-            <img id="previewImage" alt="Aperçu de la photo sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span>
+            <img id="previewImage" alt="Aperçu de la photo sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span><span id="pdfPreviewName" aria-live="polite"></span>
             <button id="removeImage" class="remove" aria-label="Retirer la photo">×</button>
           </div>
 
@@ -129,6 +129,10 @@
             <label class="upload-btn">
               <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
               📷 Ajouter une photo
+            </label>
+            <label class="upload-btn">
+              <input id="pdfInput" type="file" accept="application/pdf,.pdf" hidden />
+              📄 Ajouter un sujet PDF
             </label>
             <button id="sendBtn" class="send-btn">Envoyer</button>
           </div>
