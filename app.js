@@ -2,8 +2,10 @@ const actionCards=document.querySelectorAll("[data-command]");
 const subjectButtons=document.querySelectorAll("[data-subject]");
 const promptInput=document.getElementById("promptInput");
 const sendBtn=document.getElementById("sendBtn");
-const photoInput=document.getElementById("photoInput");\nconst pdfInput=document.getElementById("pdfInput");
-const preview=document.getElementById("previewImage");\nconst pdfPreviewName=document.getElementById("pdfPreviewName");
+const photoInput=document.getElementById("photoInput");
+const pdfInput=document.getElementById("pdfInput");
+const preview=document.getElementById("previewImage");
+const pdfPreviewName=document.getElementById("pdfPreviewName");
 const attachmentPreview=document.getElementById("attachmentPreview");
 const removeImage=document.getElementById("removeImage");
 const demoResponse=document.getElementById("demoResponse");
@@ -15,7 +17,8 @@ const chatHistory=document.getElementById("chatHistory");
 const newChatBtn=document.getElementById("newChatBtn");
 
 let selectedSubject="";
-let selectedFile=null;\nlet selectedPdf=null;
+let selectedFile=null;
+let selectedPdf=null;
 let conversationId=localStorage.getItem("copiloteConversationId") || null;
 let localMessages=JSON.parse(localStorage.getItem("copiloteMessages") || "[]");
 
@@ -74,7 +77,27 @@ subjectButtons.forEach(btn=>{
   });
 });
 
-pdfInput?.addEventListener("change",e=>{\n  selectedPdf=e.target.files?.[0]||null;\n  if(!selectedPdf)return;\n  if(selectedPdf.type!=="application/pdf" || selectedPdf.size>2_700_000){\n    selectedPdf=null;\n    pdfInput.value="";\n    statusText.textContent="Choisir un PDF de moins de 2,7 Mo";\n    return;\n  }\n  selectedFile=null;\n  photoInput.value="";\n  preview.removeAttribute("src");\n  attachmentPreview.hidden=false;\n  preview.style.display="none";\n  attachmentPreview.dataset.pdfName=selectedPdf.name;\n  if(pdfPreviewName)pdfPreviewName.textContent=`PDF sélectionné : ${selectedPdf.name}`;\n  statusText.textContent=`PDF prêt : ${selectedPdf.name}`;\n  if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";\n});\n\nphotoInput.addEventListener("change",e=>{
+pdfInput?.addEventListener("change",e=>{
+  selectedPdf=e.target.files?.[0]||null;
+  if(!selectedPdf)return;
+  if(selectedPdf.type!=="application/pdf" || selectedPdf.size>2_700_000){
+    selectedPdf=null;
+    pdfInput.value="";
+    statusText.textContent="Choisir un PDF de moins de 2,7 Mo";
+    return;
+  }
+  selectedFile=null;
+  photoInput.value="";
+  preview.removeAttribute("src");
+  attachmentPreview.hidden=false;
+  preview.style.display="none";
+  attachmentPreview.dataset.pdfName=selectedPdf.name;
+  if(pdfPreviewName)pdfPreviewName.textContent=`PDF sélectionné : ${selectedPdf.name}`;
+  statusText.textContent=`PDF prêt : ${selectedPdf.name}`;
+  if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";
+});
+
+photoInput.addEventListener("change",e=>{
   selectedFile=e.target.files?.[0]||null;
   if(!selectedFile)return;
   if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){
@@ -92,8 +115,13 @@ pdfInput?.addEventListener("change",e=>{\n  selectedPdf=e.target.files?.[0]||nul
 
 removeImage.addEventListener("click",()=>{
   selectedFile=null;
+  selectedPdf=null;
   photoInput.value="";
+  if(pdfInput)pdfInput.value="";
   preview.src="";
+  preview.style.display="";
+  attachmentPreview.dataset.pdfName="";
+  if(pdfPreviewName)pdfPreviewName.textContent="";
   attachmentPreview.hidden=true;
 });
 
@@ -131,13 +159,15 @@ sendBtn.addEventListener("click",async()=>{
   setResponse("Copilote Bac","Analyse en cours…","");
 
   try{
-    const imageDataUrl=selectedFile ? await fileToDataUrl(selectedFile) : null;\n    const pdfDataUrl=selectedPdf ? await fileToDataUrl(selectedPdf) : null;
+    const imageDataUrl=selectedFile ? await fileToDataUrl(selectedFile) : null;
+    const pdfDataUrl=selectedPdf ? await fileToDataUrl(selectedPdf) : null;
     const response=await fetch("/api/tutor",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
         message:userText,
         imageDataUrl,
+        pdfDataUrl,
         subject:selectedSubject || null,
         conversationId
       })
@@ -160,8 +190,13 @@ sendBtn.addEventListener("click",async()=>{
     statusText.textContent="Réponse reçue";
     promptInput.value="";
     selectedFile=null;
+    selectedPdf=null;
     photoInput.value="";
+    if(pdfInput)pdfInput.value="";
     preview.src="";
+    preview.style.display="";
+    attachmentPreview.dataset.pdfName="";
+    if(pdfPreviewName)pdfPreviewName.textContent="";
     attachmentPreview.hidden=true;
   }catch(error){
     const msg=error?.message || "Une erreur est survenue.";
