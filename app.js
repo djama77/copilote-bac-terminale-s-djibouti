@@ -3,6 +3,7 @@ const subjectButtons=document.querySelectorAll("[data-subject]");
 const promptInput=document.getElementById("promptInput");
 const sendBtn=document.getElementById("sendBtn");
 const photoInput=document.getElementById("photoInput");
+const cameraInput=document.getElementById("cameraInput");
 const pdfInput=document.getElementById("pdfInput");
 const preview=document.getElementById("previewImage");
 const pdfPreviewName=document.getElementById("pdfPreviewName");
@@ -97,26 +98,36 @@ pdfInput?.addEventListener("change",e=>{
   if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";
 });
 
-photoInput.addEventListener("change",e=>{
-  selectedFile=e.target.files?.[0]||null;
-  if(!selectedFile)return;
-  if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){
-    selectedFile=null;
-    photoInput.value="";
+function handlePhotoSelection(e){
+  const file=e.target.files?.[0]||null;
+  if(!file)return;
+  if(!file.type.startsWith("image/") || file.size > 4_000_000){
     statusText.textContent="Choisir une image de moins de 4 Mo";
+    photoInput.value="";
+    if(cameraInput)cameraInput.value="";
+    selectedFile=null;
     return;
   }
+  selectedFile=file;
+  selectedPdf=null;
+  if(pdfInput)pdfInput.value="";
+  if(pdfPreviewName)pdfPreviewName.textContent="";
+  attachmentPreview.dataset.pdfName="";
+  preview.style.display="";
   const url=URL.createObjectURL(selectedFile);
   preview.src=url;
   attachmentPreview.hidden=false;
   if(!promptInput.value.trim()) promptInput.value="/photo-corrige — ";
   statusText.textContent="Photo prête";
-});
+}
+photoInput.addEventListener("change",handlePhotoSelection);
+cameraInput?.addEventListener("change",handlePhotoSelection);
 
 removeImage.addEventListener("click",()=>{
   selectedFile=null;
   selectedPdf=null;
   photoInput.value="";
+  if(cameraInput)cameraInput.value="";
   if(pdfInput)pdfInput.value="";
   preview.src="";
   preview.style.display="";
@@ -192,6 +203,7 @@ sendBtn.addEventListener("click",async()=>{
     selectedFile=null;
     selectedPdf=null;
     photoInput.value="";
+    if(cameraInput)cameraInput.value="";
     if(pdfInput)pdfInput.value="";
     preview.src="";
     preview.style.display="";
