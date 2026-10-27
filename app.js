@@ -3,7 +3,7 @@ const subjectButtons=document.querySelectorAll("[data-subject]");
 const promptInput=document.getElementById("promptInput");
 const sendBtn=document.getElementById("sendBtn");
 const photoInput=document.getElementById("photoInput");\nconst pdfInput=document.getElementById("pdfInput");
-const preview=document.getElementById("previewImage");
+const preview=document.getElementById("previewImage");\nconst pdfPreviewName=document.getElementById("pdfPreviewName");
 const attachmentPreview=document.getElementById("attachmentPreview");
 const removeImage=document.getElementById("removeImage");
 const demoResponse=document.getElementById("demoResponse");
@@ -74,7 +74,7 @@ subjectButtons.forEach(btn=>{
   });
 });
 
-pdfInput?.addEventListener("change",e=>{\n  selectedPdf=e.target.files?.[0]||null;\n  if(!selectedPdf)return;\n  if(selectedPdf.type!=="application/pdf" || selectedPdf.size>2_700_000){\n    selectedPdf=null;\n    pdfInput.value="";\n    statusText.textContent="Choisir un PDF de moins de 2,7 Mo";\n    return;\n  }\n  selectedFile=null;\n  photoInput.value="";\n  preview.removeAttribute("src");\n  attachmentPreview.hidden=false;\n  preview.style.display="none";\n  attachmentPreview.dataset.pdfName=selectedPdf.name;\n  statusText.textContent=`PDF prêt : ${selectedPdf.name}`;\n  if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";\n});\n\nphotoInput.addEventListener("change",e=>{
+pdfInput?.addEventListener("change",e=>{\n  selectedPdf=e.target.files?.[0]||null;\n  if(!selectedPdf)return;\n  if(selectedPdf.type!=="application/pdf" || selectedPdf.size>2_700_000){\n    selectedPdf=null;\n    pdfInput.value="";\n    statusText.textContent="Choisir un PDF de moins de 2,7 Mo";\n    return;\n  }\n  selectedFile=null;\n  photoInput.value="";\n  preview.removeAttribute("src");\n  attachmentPreview.hidden=false;\n  preview.style.display="none";\n  attachmentPreview.dataset.pdfName=selectedPdf.name;\n  if(pdfPreviewName)pdfPreviewName.textContent=`PDF sélectionné : ${selectedPdf.name}`;\n  statusText.textContent=`PDF prêt : ${selectedPdf.name}`;\n  if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";\n});\n\nphotoInput.addEventListener("change",e=>{
   selectedFile=e.target.files?.[0]||null;
   if(!selectedFile)return;
   if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){
