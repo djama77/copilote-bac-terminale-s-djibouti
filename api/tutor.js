@@ -52,48 +52,6 @@ async function openai(path, apiKey, body) {
   return data;
 }
 
-async function deepseekChat(apiKey, model, message, imageDataUrl) {
-  const content = [{ type: "text", text: message || "/photo-corrige — Corrige cet exercice étape par étape." }];
-  if (imageDataUrl) {
-    content.push({
-      type: "image_url",
-      image_url: { url: imageDataUrl }
-    });
-  }
-
-  const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model,
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content }
-      ],
-      temperature: 0.7,
-      max_tokens: 1800
-    })
-  });
-
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const message = data?.error?.message || `Erreur DeepSeek (${response.status}).`;
-    const err = new Error(message);
-    err.status = response.status;
-    throw err;
-  }
-
-  const answer = data?.choices?.[0]?.message?.content;
-  if (typeof answer !== "string") {
-    throw new Error("DeepSeek n'a renvoyé aucune réponse exploitable.");
-  }
-
-  return answer;
-}
-
 function extractOpenAIText(data) {
   if (typeof data?.output_text === "string" && data.output_text.trim()) return data.output_text.trim();
   const chunks = [];
@@ -106,36 +64,11 @@ function extractOpenAIText(data) {
 }
 
 function resolveProvider() {
-  const provider = (process.env.TUTOR_PROVIDER || "").toLowerCase();
-
-  if (provider === "deepseek" && process.env.DEEPSEEK_API_KEY) {
-    return {
-      provider: "deepseek",
-      apiKey: process.env.DEEPSEEK_API_KEY,
-      model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
-      apiUrl: "https://api.deepseek.com/v1/chat/completions"
-    };
-  }
-
-  if (process.env.OPENAI_API_KEY) {
-    return {
-      provider: "openai",
-      apiKey: process.env.OPENAI_API_KEY,
-      model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-      apiUrl: "https://api.openai.com/v1/responses"
-    };
-  }
-
-  if (process.env.DEEPSEEK_API_KEY) {
-    return {
-      provider: "deepseek",
-      apiKey: process.env.DEEPSEEK_API_KEY,
-      model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
-      apiUrl: "https://api.deepseek.com/v1/chat/completions"
-    };
-  }
-
-  return null;
+  if (!process.env.OPENAI_API_KEY) return null;
+  return {
+    apiKey: process.env.OPENAI_API_KEY,
+    model: process.env.OPENAI_MODEL || "gpt-4.1-mini"
+  };
 }
 
 export default async function handler(req, res) {
@@ -151,7 +84,7 @@ export default async function handler(req, res) {
   if (!providerConfig) {
     return res.status(500).json({
       error: "Configuration IA incomplète.",
-      detail: "Ajoutez OPENAI_API_KEY ou DEEPSEEK_API_KEY dans les variables d'environnement du serveur."
+      detail: "Ajoutez OPENAI_API_KEY dans les variables d'environnement du serveur Vercel."
     });
   }
 
@@ -172,16 +105,6 @@ export default async function handler(req, res) {
     }
     if (imageDataUrl && !validateImageDataUrl(imageDataUrl)) {
       return res.status(400).json({ error: "Format de photo non accepté." });
-    }
-
-    if (providerConfig.provider === "deepseek") {
-      const answer = await deepseekChat(providerConfig.apiKey, providerConfig.model, message, imageDataUrl);
-      return res.status(200).json({
-        answer,
-        provider: "deepseek",
-        model: providerConfig.model,
-        conversationId: null
-      });
     }
 
     if (!conversationId) {
