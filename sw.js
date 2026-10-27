@@ -1,4 +1,4 @@
-const CACHE = "copilote-bac-v2";
+const CACHE = "copilote-bac-v3";
 const BASE = new URL("./", self.registration.scope);
 const ASSETS = ["", "index.html", "styles.css", "app.js", "manifest.webmanifest"].map(path => new URL(path, BASE).href);
 
