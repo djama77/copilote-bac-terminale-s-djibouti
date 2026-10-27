@@ -2,7 +2,7 @@ const actionCards=document.querySelectorAll("[data-command]");
 const subjectButtons=document.querySelectorAll("[data-subject]");
 const promptInput=document.getElementById("promptInput");
 const sendBtn=document.getElementById("sendBtn");
-const photoInput=document.getElementById("photoInput");
+const photoInput=document.getElementById("photoInput");\nconst pdfInput=document.getElementById("pdfInput");
 const preview=document.getElementById("previewImage");
 const attachmentPreview=document.getElementById("attachmentPreview");
 const removeImage=document.getElementById("removeImage");
@@ -15,7 +15,7 @@ const chatHistory=document.getElementById("chatHistory");
 const newChatBtn=document.getElementById("newChatBtn");
 
 let selectedSubject="";
-let selectedFile=null;
+let selectedFile=null;\nlet selectedPdf=null;
 let conversationId=localStorage.getItem("copiloteConversationId") || null;
 let localMessages=JSON.parse(localStorage.getItem("copiloteMessages") || "[]");
 
@@ -74,7 +74,7 @@ subjectButtons.forEach(btn=>{
   });
 });
 
-photoInput.addEventListener("change",e=>{
+pdfInput?.addEventListener("change",e=>{\n  selectedPdf=e.target.files?.[0]||null;\n  if(!selectedPdf)return;\n  if(selectedPdf.type!=="application/pdf" || selectedPdf.size>2_700_000){\n    selectedPdf=null;\n    pdfInput.value="";\n    statusText.textContent="Choisir un PDF de moins de 2,7 Mo";\n    return;\n  }\n  selectedFile=null;\n  photoInput.value="";\n  preview.removeAttribute("src");\n  attachmentPreview.hidden=false;\n  preview.style.display="none";\n  attachmentPreview.dataset.pdfName=selectedPdf.name;\n  statusText.textContent=`PDF prêt : ${selectedPdf.name}`;\n  if(!promptInput.value.trim()) promptInput.value="/corrige-annale — Corrige toutes les questions du sujet, étape par étape.";\n});\n\nphotoInput.addEventListener("change",e=>{
   selectedFile=e.target.files?.[0]||null;
   if(!selectedFile)return;
   if(!selectedFile.type.startsWith("image/") || selectedFile.size > 4_000_000){
@@ -115,7 +115,7 @@ function setResponse(title,text,note=""){
 
 sendBtn.addEventListener("click",async()=>{
   const text=promptInput.value.trim();
-  if(!text && !selectedFile){
+  if(!text && !selectedFile && !selectedPdf){
     promptInput.focus();
     return;
   }
@@ -131,7 +131,7 @@ sendBtn.addEventListener("click",async()=>{
   setResponse("Copilote Bac","Analyse en cours…","");
 
   try{
-    const imageDataUrl=selectedFile ? await fileToDataUrl(selectedFile) : null;
+    const imageDataUrl=selectedFile ? await fileToDataUrl(selectedFile) : null;\n    const pdfDataUrl=selectedPdf ? await fileToDataUrl(selectedPdf) : null;
     const response=await fetch("/api/tutor",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
