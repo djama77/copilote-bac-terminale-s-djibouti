@@ -121,14 +121,18 @@
           <textarea id="promptInput" rows="3" placeholder="Exemple : /photo-corrige — corrige cet exercice étape par étape"></textarea>
 
           <div class="attachments" id="attachmentPreview" hidden>
-            <img id="previewImage" alt="Aperçu de la photo sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span><span id="pdfPreviewName" aria-live="polite"></span>
+            <img id="previewImage" alt="Aperçu de la pièce jointe sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span>
             <button id="removeImage" class="remove" aria-label="Retirer la photo">×</button>
           </div>
 
           <div class="composer-actions">
             <label class="upload-btn">
-              <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
-              📷 Ajouter une photo
+              <input id="photoInput" type="file" accept="image/*" hidden />
+              🖼️ Galerie
+            </label>
+            <label class="upload-btn">
+              <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+              📷 Prendre une photo
             </label>
             <label class="upload-btn">
               <input id="pdfInput" type="file" accept="application/pdf,.pdf" hidden />
