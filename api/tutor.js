@@ -2,7 +2,7 @@ const SYSTEM_PROMPT = `
 Tu es Copilote Bac Terminale S Djibouti, un professeur particulier numérique pour Deksan.
 Tu aides en Mathématiques, Physique, Chimie, SVT, Philosophie et Anglais, au niveau lycée.
 Priorité : documents fournis par l'élève, programme et ressources CRIPEN/MENFOP, puis connaissances générales.
-Pour /photo-corrige : transcris fidèlement, marque [illisible] si nécessaire, identifie matière/chapitre/notion, extrais les données, explique la méthode, résous étape par étape, donne la réponse finale et vérifie le calcul.
+Pour /photo-corrige et /corrige-annale : transcris fidèlement le sujet, marque [illisible] si nécessaire, identifie matière/chapitre/notion, extrais les données, explique la méthode, résous chaque question étape par étape, donne la réponse finale et vérifie les calculs. Pour une annale sans corrigé officiel, produis un corrigé pédagogique original, sans prétendre qu’il est officiel. Ne saute aucune question visible ; si le sujet est long, annonce clairement les parties traitées et poursuis sur demande. Ne devine jamais un énoncé, un graphique, une valeur ou un symbole illisible : signale précisément ce qui manque.
 Pour /analyse-cours : identifie matière, chapitre, notions, définitions, formules et éléments à comparer au programme.
 Pour /fiche-revision, /flashcards, /carte-mentale, /quiz-cours, /exo-type-bac et /compare-programme : reste fidèle au contenu fourni et au niveau Terminale S.
 Maths : données -> propriété/formule -> calcul -> justification -> conclusion -> vérification.
@@ -30,6 +30,10 @@ function setCors(req, res) {
 
 function validateImageDataUrl(value) {
   return typeof value === "string" && /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(value);
+}
+
+function validatePdfDataUrl(value) {
+  return typeof value === "string" && /^data:application\/pdf;base64,[A-Za-z0-9+/=]+$/.test(value);
 }
 
 async function openai(path, apiKey, body) {
@@ -92,19 +96,26 @@ export default async function handler(req, res) {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const message = String(body.message || "").trim();
     const imageDataUrl = body.imageDataUrl ? String(body.imageDataUrl) : null;
+    const pdfDataUrl = body.pdfDataUrl ? String(body.pdfDataUrl) : null;
     let conversationId = body.conversationId ? String(body.conversationId) : null;
 
-    if (!message && !imageDataUrl) {
-      return res.status(400).json({ error: "Ajoutez une question ou une photo." });
+    if (!message && !imageDataUrl && !pdfDataUrl) {
+      return res.status(400).json({ error: "Ajoutez une question, une photo ou un sujet PDF." });
     }
     if (message.length > 12000) {
       return res.status(400).json({ error: "Le texte est trop long." });
     }
-    if (imageDataUrl && imageDataUrl.length > 6_000_000) {
-      return res.status(400).json({ error: "La photo est trop volumineuse. Utilisez une image plus légère." });
+    if (imageDataUrl && imageDataUrl.length > 4_000_000) {
+      return res.status(400).json({ error: "La photo est trop volumineuse. Utilisez une image de moins de 3 Mo." });
+    }
+    if (pdfDataUrl && pdfDataUrl.length > 3_800_000) {
+      return res.status(400).json({ error: "Le PDF est trop volumineux. Utilisez un PDF de moins de 2,7 Mo ou envoyez les pages en photos." });
     }
     if (imageDataUrl && !validateImageDataUrl(imageDataUrl)) {
       return res.status(400).json({ error: "Format de photo non accepté." });
+    }
+    if (pdfDataUrl && !validatePdfDataUrl(pdfDataUrl)) {
+      return res.status(400).json({ error: "Format PDF non accepté." });
     }
 
     if (!conversationId) {
@@ -116,7 +127,13 @@ export default async function handler(req, res) {
       { type: "input_text", text: message || "/photo-corrige — Corrige cet exercice étape par étape." }
     ];
     if (imageDataUrl) {
-      content.push({ type: "input_image", image_url: imageDataUrl, detail: "auto" });
+      content.push({ type: "input_image", image_url: imageDataUrl, detail: "high" });
+    }
+    if (pdfDataUrl) {
+      content.push({ type: "input_file", filename: "annale-bac.pdf", file_data: pdfDataUrl, detail: "high" });
+      if (!message.includes("/corrige-annale")) {
+        content[0].text = `${message || "Corrige ce sujet de bac"}\n\n/corrige-annale — Lis le sujet PDF fourni et produis un corrigé pédagogique détaillé de toutes les questions lisibles. Indique clairement toute partie illisible.`;
+      }
     }
 
     const data = await openai("responses", providerConfig.apiKey, {
