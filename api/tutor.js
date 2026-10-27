@@ -130,7 +130,7 @@ export default async function handler(req, res) {
       content.push({ type: "input_image", image_url: imageDataUrl, detail: "high" });
     }
     if (pdfDataUrl) {
-      content.push({ type: "input_file", filename: "annale-bac.pdf", file_data: pdfDataUrl, detail: "high" });
+      content.push({ type: "input_file", filename: "annale-bac.pdf", file_data: pdfDataUrl });
       if (!message.includes("/corrige-annale")) {
         content[0].text = `${message || "Corrige ce sujet de bac"}\n\n/corrige-annale — Lis le sujet PDF fourni et produis un corrigé pédagogique détaillé de toutes les questions lisibles. Indique clairement toute partie illisible.`;
       }
