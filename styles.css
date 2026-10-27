@@ -12,3 +12,6 @@
 .chat-bubble p{margin:0;white-space:pre-wrap;line-height:1.45}
 .chat-bubble.user{align-self:flex-end;background:#0f766e;color:white;border-bottom-right-radius:4px}
 .chat-bubble.assistant{align-self:flex-start;background:#e8eef7;color:#142033;border-bottom-left-radius:4px}
+
+.geogebra-card{text-decoration:none;}
+.geogebra-card .desc{color:#aebed1;}
