@@ -310,7 +310,11 @@ async function refreshLearningDashboard(){
   const {data,error}=await learningClient.from("chapter_progress").select("subject,chapter,status,mastery_percent,next_review_at,updated_at").eq("user_id",learningUser.id).order("updated_at",{ascending:false});
   if(error){dashboardMessage("Lecture du suivi impossible : "+error.message);return;}
   renderProgressRows(data||[]);
+  const attempts=await learningClient.from("quiz_attempts").select("subject,chapter,quiz_type,score,total_questions,correct_answers,completed_at").eq("user_id",learningUser.id).order("completed_at",{ascending:false}).limit(8);
+  const history=document.getElementById("quizHistory");
+  if(history){history.replaceChildren();(attempts.data||[]).forEach(attempt=>{const row=document.createElement("p");row.textContent=attempt.subject+(attempt.chapter?" — "+attempt.chapter:"")+" · "+attempt.score+" % · "+attempt.correct_answers+"/"+attempt.total_questions+" · "+new Date(attempt.completed_at).toLocaleDateString("fr-FR");history.append(row);});}
   saveProgressButton.disabled=false;
+  document.getElementById("saveQuizResult").disabled=false;
   dashboardMessage("Connecté : "+(learningUser.email||"compte élève")+". Progression synchronisée.");
 }
 
@@ -398,3 +402,21 @@ fetch("/sources/cripen_terminal_curriculum.json").then(response=>response.ok?res
   curriculumIndex=data;populateChapterChoices();
 }).catch(()=>dashboardMessage("Index de pagination CRIPEN indisponible pour le moment."));
 initializeLearningDashboard();
+
+document.getElementById("saveQuizResult")?.addEventListener("click",async()=>{
+  if(!learningClient || !learningUser){dashboardMessage("Connecte-toi avant d'enregistrer.");return;}
+  const total=Number(document.getElementById("quizTotal").value);
+  const correct=Number(document.getElementById("quizCorrect").value);
+  if(!Number.isInteger(total)||total<1||total>100||!Number.isInteger(correct)||correct<0||correct>total){
+    dashboardMessage("Vérifie le nombre de questions et les bonnes réponses.");return;
+  }
+  const {error}=await learningClient.from("quiz_attempts").insert({
+    user_id:learningUser.id,subject:subjectSelect.value,chapter:chapterSelect.value||null,
+    quiz_type:document.getElementById("quizType").value,
+    score:Math.round(correct/total*10000)/100,total_questions:total,correct_answers:correct,
+    source_label:"Résultat saisi par l'élève — à distinguer d'une annale officielle"
+  });
+  if(error){dashboardMessage("Résultat non enregistré : vérifie la migration Supabase.");return;}
+  dashboardMessage("Résultat de l'évaluation enregistré.");
+  await refreshLearningDashboard();
+});
