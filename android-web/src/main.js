@@ -67,7 +67,7 @@ function render(){
     const text=prompt.value.trim()||((file||selectedPdf)?'/photo-corrige — Analyse le document et accompagne-moi étape par étape.':'');
     if(!text)return;
     if(!API_URL){document.getElementById('status').textContent='Configurer VITE_TUTOR_API_URL';return}
-    if(file&&file.size>4_000_000){document.getElementById('status').textContent='Photo trop volumineuse (max 4 Mo)';return}
+    if(file&&file.size>2_700_000){document.getElementById('status').textContent='Photo trop volumineuse (max 2,7 Mo)';return}
 
     messages.push({role:'user',text});save();render();
     document.getElementById('status').textContent='ChatGPT réfléchit…';
