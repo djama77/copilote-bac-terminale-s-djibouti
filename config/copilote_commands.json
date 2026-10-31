@@ -22,7 +22,7 @@
     "/flashcards": "Créer des cartes Question/Réponse à partir du cours.",
     "/carte-mentale": "Créer une carte mentale textuelle du chapitre.",
     "/quiz-cours": "Créer un quiz uniquement à partir du cours étudié.",
-    "/exo-type-bac": "Créer un exercice original niveau Bac S Djibouti sur la compétence visée.",
+    "/exo-type-bac": "S'appuyer sur les sujets du Baccalauréat de Djibouti ; tout exercice inédit doit être signalé comme non officiel.",
     "/revision-espacee": "Faire revenir progressivement les notions déjà étudiées.",
     "/maths-cripen": "Utiliser le programme, le manuel CRIPEN Terminale S et les annales Bac S comme références Mathématiques."
   }
