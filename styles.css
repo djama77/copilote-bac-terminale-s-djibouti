@@ -23,3 +23,12 @@
 .progress-item strong{font-size:13px;overflow-wrap:anywhere}.progress-item span,.progress-item small{font-size:11px;color:#aebed1}
 .progress-item progress{width:100%;height:8px;accent-color:#2dd4bf}
 @media(max-width:600px){.learning-dashboard{padding:14px}.dashboard-auth,.dashboard-progress{grid-template-columns:1fr}.dashboard-summary{grid-template-columns:1fr}.progress-list{grid-template-columns:1fr}.dashboard-heading h2{font-size:20px}}
+
+.quiz-log{margin-top:18px;padding-top:15px;border-top:1px solid #26394f}
+.quiz-log h3{font-size:16px;margin:0 0 12px}
+.quiz-log-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.quiz-log-fields label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:#c7d7e8}
+.quiz-log-fields input,.quiz-log-fields select{min-width:0;border:1px solid #31465e;border-radius:10px;padding:10px;background:#08121f;color:#fff}
+.quiz-log>button{margin-top:12px;border:0;border-radius:11px;padding:11px 14px;background:#2dd4bf;color:#04201b;font-weight:800}
+.quiz-history p{font-size:12px;color:#b8c8da;margin:8px 0}
+@media(max-width:600px){.quiz-log-fields{grid-template-columns:1fr}}
