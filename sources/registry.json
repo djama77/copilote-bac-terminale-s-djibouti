@@ -1,6 +1,6 @@
 {
   "name": "CRIPEN Terminale S Source Registry",
-  "version": "1.0",
+  "version": "1.1",
   "official_sources": [
     {
       "id": "program_terminal",
@@ -8,7 +8,11 @@
       "publisher": "CRIPEN / MENFOP - République de Djibouti",
       "url": "https://cripen.dj/wp-content/uploads/2025/05/Programme-compile-Terminale.pdf",
       "priority": 1,
-      "use": ["curriculum_alignment", "chapter_detection", "competency_mapping"]
+      "use": [
+        "curriculum_alignment",
+        "chapter_detection",
+        "competency_mapping"
+      ]
     },
     {
       "id": "bac_series_s",
@@ -16,7 +20,12 @@
       "publisher": "CRIPEN",
       "url": "https://cripen.dj/index.php/serie-s/",
       "priority": 2,
-      "use": ["exam_style", "past_papers", "corrections", "bac_simulation"]
+      "use": [
+        "exam_style",
+        "past_papers",
+        "corrections",
+        "bac_simulation"
+      ]
     },
     {
       "id": "cripen_portal",
@@ -24,7 +33,10 @@
       "publisher": "CRIPEN",
       "url": "https://cripen.dj/",
       "priority": 3,
-      "use": ["official_resources", "source_verification"]
+      "use": [
+        "official_resources",
+        "source_verification"
+      ]
     },
     {
       "id": "support_school",
@@ -32,8 +44,49 @@
       "publisher": "CRIPEN",
       "url": "https://cripen.dj/index.php/soutien-scolaire/",
       "priority": 4,
-      "use": ["lesson_support", "video_reference"]
+      "use": [
+        "lesson_support",
+        "video_reference"
+      ]
     }
   ],
-  "local_corpus_patterns": ["corpus/math/*.pdf", "corpus/physics/*.pdf", "corpus/svt/*.pdf", "corpus/bac/*.pdf"]
+  "educational_references": [
+    {
+      "id": "djibsvt_annales",
+      "title": "Annales et corrigés SVT - Djibouti",
+      "publisher": "Ressource pédagogique SVT associée à l'Inspection / MENFOP",
+      "url": "https://sites.google.com/view/djibsvt/lycee/annales-bac",
+      "use": [
+        "svt_past_papers",
+        "svt_corrections"
+      ],
+      "provenance_note": "Ressource pédagogique distincte du portail CRIPEN ; vérifier la provenance de chaque document."
+    },
+    {
+      "id": "svt_2025_correction",
+      "title": "Corrigé SVT Bac 2025",
+      "publisher": "Document hébergé sur Google Drive",
+      "url": "https://drive.google.com/file/d/1yoOgH6uYY1VTb5u2rtTNhC0O9-cfTZZU/view",
+      "use": [
+        "svt_correction"
+      ],
+      "provenance_note": "Hébergement tiers ; ne pas le qualifier d'officiel CRIPEN sans vérification du document."
+    },
+    {
+      "id": "svt_2023_correction",
+      "title": "Corrigé SVT Bac 2023",
+      "publisher": "Document hébergé sur Google Drive",
+      "url": "https://drive.google.com/file/d/1GqZ3PzrNTN-jAK8_5M9-JF4C-iufWXMl/view",
+      "use": [
+        "svt_correction"
+      ],
+      "provenance_note": "Hébergement tiers ; ne pas le qualifier d'officiel CRIPEN sans vérification du document."
+    }
+  ],
+  "local_corpus_patterns": [
+    "corpus/math/*.pdf",
+    "corpus/physics/*.pdf",
+    "corpus/svt/*.pdf",
+    "corpus/bac/*.pdf"
+  ]
 }
