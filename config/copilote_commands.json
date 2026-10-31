@@ -24,6 +24,8 @@
     "/quiz-cours": "Créer un quiz uniquement à partir du cours étudié.",
     "/exo-type-bac": "S'appuyer sur les sujets du Baccalauréat de Djibouti ; tout exercice inédit doit être signalé comme non officiel.",
     "/revision-espacee": "Faire revenir progressivement les notions déjà étudiées.",
-    "/maths-cripen": "Utiliser le programme, le manuel CRIPEN Terminale S et les annales Bac S comme références Mathématiques."
+    "/maths-cripen": "Utiliser le programme, le manuel CRIPEN Terminale S et les annales Bac S comme références Mathématiques.",
+    "/schema": "Construire un schéma explicatif légendé et progressif pour une notion du programme.",
+    "/graphique": "Construire ou interpréter un graphique avec axes, unités, échelle, données et conclusion."
   }
 }
