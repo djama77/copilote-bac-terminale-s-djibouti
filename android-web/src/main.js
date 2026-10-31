@@ -1,7 +1,7 @@
 import './style.css';
 
 const API_URL=import.meta.env.VITE_TUTOR_API_URL||'';
-const subjects=['Mathématiques','Physique','Chimie','SVT','Philosophie','Anglais'];
+const subjects=['Mathématiques','Physique','Chimie','SVT','Philosophie','Anglais','Arabe'];
 const modes=[
   ['/cours','Expliquer le cours'],
   ['/indice','Indice progressif'],
