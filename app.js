@@ -1,5 +1,3 @@
-import './styles.css';
-
 const actionCards=document.querySelectorAll("[data-command]");
 const subjectButtons=document.querySelectorAll("[data-subject]");
 const promptInput=document.getElementById("promptInput");
@@ -103,8 +101,8 @@ pdfInput?.addEventListener("change",e=>{
 function handlePhotoSelection(e){
   const file=e.target.files?.[0]||null;
   if(!file)return;
-  if(!file.type.startsWith("image/") || file.size > 4_000_000){
-    statusText.textContent="Choisir une image de moins de 4 Mo";
+  if(!file.type.startsWith("image/") || file.size > 2_700_000){
+    statusText.textContent="Choisir une image de moins de 2,7 Mo";
     photoInput.value="";
     if(cameraInput)cameraInput.value="";
     selectedFile=null;
