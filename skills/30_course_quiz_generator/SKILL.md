@@ -22,3 +22,11 @@ Ne pas utiliser un manuel, programme ou référentiel étranger pour définir le
 - Indiquer le chapitre ou la partie du document source utilisée lorsque disponible.
 - Corriger avec une explication conforme aux méthodes et notations du programme local.
 - En cas de source manquante ou incertaine, le signaler au lieu d'inventer une référence CRIPEN.
+
+
+## Améliorations V9 — traçabilité et suivi
+- Toujours enregistrer la matière et le chapitre ciblés dans le contexte de l'activité.
+- Si le cours ou le programme CRIPEN est disponible, indiquer le titre du document et la page imprimée exacte. Ne jamais déduire une page exacte d'un simple début de section.
+- Après le quiz, fournir le nombre de bonnes réponses, les notions solides, les notions fragiles et une prochaine activité courte.
+- Les quiz générés par le Copilote sont des entraînements non officiels ; ne pas les présenter comme des annales.
+
