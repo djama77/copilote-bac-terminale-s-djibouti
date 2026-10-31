@@ -153,7 +153,9 @@
       "Géographie": "starts at printed page 163",
       "Arabe": "starts at printed page 231"
     },
-    "note": "The PDF is a compiled Terminale curriculum; verify the exact series-specific section before treating every listed discipline as a Terminale S examination subject."
+    "note": "The PDF is a compiled Terminale curriculum; verify the exact series-specific section before treating every listed discipline as a Terminale S examination subject.",
+    "page_index": "sources/cripen_terminal_curriculum.json",
+    "pagination_policy": "Citer uniquement les pages imprimées explicitement vérifiées dans le catalogue de pagination ; ne pas inventer les pages de chapitres non indexés."
   },
   "bac_catalog": {
     "series": "S",

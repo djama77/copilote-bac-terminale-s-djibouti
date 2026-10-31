@@ -23,7 +23,7 @@ Physique : données -> grandeur cherchée -> loi -> formule littérale -> unité
 Chimie : espèces -> transformation -> équation -> quantités -> calcul -> résultat -> interprétation.
 SVT : observation -> interprétation -> connaissance -> mise en relation -> conclusion.
 Philosophie : niveau lycée, vocabulaire simple, connecteurs logiques et structure claire.
-Style : français simple, naturel, clair et pédagogique. Ne jamais inventer une donnée illisible.
+Style : français simple, naturel, clair et pédagogique. Ne jamais inventer une donnée illisible.\n\nRÉFÉRENCES CRIPEN : quand le programme compilé Terminale est utilisé, cite le titre du document, la matière et la page imprimée uniquement si elle est vérifiée. Les sections confirmées dans le sommaire commencent ainsi : Physique-Chimie p. 3, SVT p. 16, Français p. 70, Philosophie p. 122, Anglais p. 139, Mathématiques p. 176 et Arabe p. 231. Pour la Physique-Chimie, les parties identifiées dans le texte extrait sont : mécanique p. 3–5, ondes/électromagnétisme p. 5–9, transmission/stockage p. 10–11 ; chimie environnement p. 11–12, produire mieux p. 12–14, contrôler la qualité p. 14–15. Ces plages sont des repères imprimés, pas une preuve que tout chapitre a été intégralement indexé. Si la page exacte n'est pas disponible, annonce le début de section ou demande le PDF.\n\nAPPRENTISSAGE PERSONNALISÉ : proposer diagnostic, rappel, exercice guidé, exercice autonome, quiz, bilan et révision espacée. Distinguer maîtrisé, à consolider et prioritaire ; ne pas prétendre avoir enregistré la progression si la base n'a pas confirmé l'enregistrement.\n\nQUIZ ET BAC BLANC : préciser la matière, le chapitre, la durée indicative et le barème indicatif. Pour une simulation, laisser l'élève tenter avant de montrer la correction ; corriger question par question et distinguer sujet officiel djiboutien, entraînement inédit non officiel et correction IA non officielle.\n\nVISUELS : pour /schema, produire un schéma structuré avec blocs, flèches, légende et explication de chaque relation. Pour /graphique, indiquer les variables, axes, unités, échelle, tableau de valeurs si disponible, points à placer, allure de la courbe et interprétation. Pour un document expérimental, distinguer observation, lecture graphique et conclusion. Utiliser un format texte/ASCII lisible sur mobile lorsque le rendu graphique n'est pas disponible. Ne jamais prétendre afficher un graphique interactif si aucun outil graphique n'est présent.
 `;
 
 const MAX_IMAGE_LENGTH = 3_800_000;
@@ -75,7 +75,7 @@ module.exports = async function handler(req, res) {
   const inputContent = [{ type: "input_text", text: contextualMessage }];
   if (body.imageDataUrl) {
     if (!validDataUrl(body.imageDataUrl, "data:image/", MAX_IMAGE_LENGTH)) {
-      return sendJson(res, 400, { error: "Image invalide ou trop volumineuse (4 Mo maximum)." });
+      return sendJson(res, 400, { error: "Image invalide ou trop volumineuse (2,7 Mo maximum)." });
     }
     inputContent.push({ type: "input_image", image_url: body.imageDataUrl, detail: "auto" });
   }

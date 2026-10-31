@@ -75,6 +75,26 @@
         </div>
       </section>
 
+      <section class="learning-dashboard" id="learningDashboard" aria-labelledby="learningTitle">
+        <div class="dashboard-heading"><div><span class="eyebrow">MON APPRENTISSAGE</span><h2 id="learningTitle">Mon parcours par chapitre</h2><p>Connecte-toi pour enregistrer tes progrès et les retrouver sur tes appareils.</p></div><span class="dashboard-icon">📊</span></div>
+        <div class="dashboard-auth">
+          <label>Adresse e-mail<input id="studentEmail" type="email" autocomplete="email" placeholder="eleve@exemple.com"></label>
+          <label>Mot de passe<input id="studentPassword" type="password" autocomplete="current-password" placeholder="Au moins 8 caractères"></label>
+          <div class="dashboard-auth-actions"><button id="studentSignIn" type="button">Se connecter</button><button id="studentSignUp" type="button" class="secondary-action">Créer un compte</button><button id="studentSignOut" type="button" hidden>Se déconnecter</button></div>
+          <p id="dashboardStatus" role="status" aria-live="polite">Chargement de la configuration du suivi…</p>
+        </div>
+        <div class="dashboard-progress">
+          <label>Matière<select id="progressSubject"><option>Mathématiques</option><option>Physique</option><option>Chimie</option><option>SVT</option><option>Philosophie</option><option>Français</option><option>Anglais</option><option>Arabe</option></select></label>
+          <label>Chapitre<select id="progressChapter"><option value="">Choisir un chapitre</option></select></label>
+          <label>État<select id="progressState"><option value="not_started">Non commencé</option><option value="in_progress">En cours</option><option value="fragile">À renforcer</option><option value="mastered">Maîtrisé</option></select></label>
+          <label>Maîtrise : <output id="masteryOutput">0 %</output><input id="masteryRange" type="range" min="0" max="100" step="5" value="0"></label>
+          <button id="saveProgress" type="button" disabled>Enregistrer ma progression</button>
+        </div>
+        <div class="dashboard-summary" id="dashboardSummary"><span>0 chapitre enregistré</span><span>0 maîtrisé</span><span>0 à renforcer</span></div>
+        <div id="progressList" class="progress-list" aria-live="polite"></div>
+        <div class="quiz-log"><h3>Enregistrer un résultat de quiz ou Bac blanc</h3><div class="quiz-log-fields"><label>Nombre de questions<input id="quizTotal" type="number" min="1" max="100" value="10"></label><label>Bonnes réponses<input id="quizCorrect" type="number" min="0" max="100" value="0"></label><label>Type<select id="quizType"><option value="quiz">Quiz de cours</option><option value="bac_blanc">Simulation Bac blanc</option><option value="practice">Exercice d’entraînement</option></select></label></div><button id="saveQuizResult" type="button" disabled>Enregistrer le résultat</button><div id="quizHistory" class="quiz-history" aria-live="polite"></div></div>
+        <p class="source-note">Les références CRIPEN affichées sont des pages imprimées du programme officiel. Lorsqu’une page précise n’a pas été vérifiée, l’application indique seulement le début de la section.</p>
+      </section>
       <section class="quick-grid" aria-label="Actions principales">
         <button class="action-card featured" data-command="/photo-corrige"><span class="icon">📷</span><span class="title">Corriger un exercice</span><span class="desc">Photo → transcription → méthode → correction</span></button>
         <button class="action-card" data-command="/analyse-cours"><span class="icon">📖</span><span class="title">Analyser mon cours</span><span class="desc">Identifier chapitre, notions et contenu</span></button>
@@ -82,6 +102,8 @@
         <button class="action-card" data-command="/flashcards"><span class="icon">🧠</span><span class="title">Flashcards</span><span class="desc">Questions-réponses pour mémoriser</span></button>
         <button class="action-card" data-command="/quiz-cours"><span class="icon">❓</span><span class="title">Quiz du cours</span><span class="desc">5 ou 10 questions ciblées</span></button>
         <button class="action-card" data-command="/carte-mentale"><span class="icon">🗺️</span><span class="title">Carte mentale</span><span class="desc">Voir le chapitre en un coup d’œil</span></button>
+        <button class="action-card" data-command="/schema"><span class="icon">🧩</span><span class="title">Schéma explicatif</span><span class="desc">Comprendre les étapes et les relations entre notions</span></button>
+        <button class="action-card" data-command="/graphique"><span class="icon">📊</span><span class="title">Lire un graphique</span><span class="desc">Axes, unités, évolution et interprétation</span></button>
         <button class="action-card" data-command="/exo-type-bac"><span class="icon">📝</span><span class="title">Exercice type Bac</span><span class="desc">Nouvel exercice niveau Bac S Djibouti</span></button>
         <button class="action-card" data-command="/compare-programme"><span class="icon">📋</span><span class="title">Comparer au programme</span><span class="desc">Présent, à compléter ou manquant</span></button>
         <button class="action-card" data-command="/revision-espacee"><span class="icon">🔁</span><span class="title">Révision espacée</span><span class="desc">Revoir les notions au bon moment</span></button>
@@ -118,6 +140,6 @@
     </main>
     <nav class="bottom-nav" aria-label="Navigation principale"><button class="active">⌂<span>Accueil</span></button><button data-scroll="subjects">▦<span>Matières</span></button><button data-scroll="assistantPanel">✦<span>Assistant</span></button></nav>
   </div>
-  <script src="./app.js"></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
