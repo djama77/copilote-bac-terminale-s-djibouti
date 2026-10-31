@@ -75,7 +75,7 @@ module.exports = async function handler(req, res) {
   const inputContent = [{ type: "input_text", text: contextualMessage }];
   if (body.imageDataUrl) {
     if (!validDataUrl(body.imageDataUrl, "data:image/", MAX_IMAGE_LENGTH)) {
-      return sendJson(res, 400, { error: "Image invalide ou trop volumineuse (4 Mo maximum)." });
+      return sendJson(res, 400, { error: "Image invalide ou trop volumineuse (2,7 Mo maximum)." });
     }
     inputContent.push({ type: "input_image", image_url: body.imageDataUrl, detail: "auto" });
   }
