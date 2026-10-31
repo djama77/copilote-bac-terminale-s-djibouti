@@ -89,17 +89,34 @@ module.exports = async function handler(req, res) {
   }
 
   const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
-  const payload = {
-    model,
-    instructions: SYSTEM_PROMPT,
-    input: [{ role: "user", content: inputContent }],
-    max_output_tokens: 2500
-  };
-  if (typeof body.conversationId === "string" && /^resp_[A-Za-z0-9_-]+$/.test(body.conversationId)) {
-    payload.previous_response_id = body.conversationId;
-  }
-
   try {
+    let conversationId = typeof body.conversationId === "string" && /^conv_[A-Za-z0-9_-]+$/.test(body.conversationId)
+      ? body.conversationId
+      : null;
+
+    if (!conversationId) {
+      const conversationResponse = await fetch("https://api.openai.com/v1/conversations", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ metadata: { application: "copilote-bac-terminale-s-djibouti" } })
+      });
+      const conversationData = await conversationResponse.json().catch(() => ({}));
+      if (!conversationResponse.ok || !conversationData.id) {
+        return sendJson(res, 502, { error: "Impossible d'initialiser la conversation IA." });
+      }
+      conversationId = conversationData.id;
+    }
+
+    const payload = {
+      model,
+      instructions: SYSTEM_PROMPT,
+      input: [{ role: "user", content: inputContent }],
+      conversation: conversationId,
+      max_output_tokens: 2500
+    };
     const upstream = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: {
@@ -121,7 +138,7 @@ module.exports = async function handler(req, res) {
     if (!answer) return sendJson(res, 502, { error: "Le service IA n'a retourné aucune réponse exploitable." });
     return sendJson(res, 200, {
       answer,
-      conversationId: data.id || null,
+      conversationId: data.conversation?.id || conversationId,
       model: data.model || model
     });
   } catch (error) {
