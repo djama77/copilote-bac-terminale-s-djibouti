@@ -351,12 +351,13 @@ async function signInStudent(createAccount=false){
     ? await learningClient.auth.signUp({email,password})
     : await learningClient.auth.signInWithPassword({email,password});
   if(result.error){dashboardMessage("Authentification impossible : "+result.error.message);return;}
-  learningUser=result.data.user||result.data.session?.user||null;
+  learningUser=result.data.session?.user||null;
   if(!learningUser){dashboardMessage("Compte créé. Vérifie ton e-mail pour confirmer l'inscription, puis connecte-toi.");return;}
   document.getElementById("studentSignOut").hidden=false;
   document.getElementById("studentSignIn").hidden=true;
   document.getElementById("studentSignUp").hidden=true;
-  await learningClient.from("student_profiles").upsert({user_id:learningUser.id,grade:"Terminale S"},{onConflict:"user_id"});
+  const profileResult=await learningClient.from("student_profiles").upsert({user_id:learningUser.id,grade:"Terminale S"},{onConflict:"user_id"});
+  if(profileResult.error){dashboardMessage("Profil non initialisé : vérifie la migration Supabase et les règles RLS.");return;}
   await refreshLearningDashboard();
 }
 
