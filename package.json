@@ -1,0 +1,12 @@
+{
+  "name": "copilote-bac-terminale-s-djibouti",
+  "version": "9.0.0",
+  "private": true,
+  "description": "Application web Copilote Bac Terminale S — Djibouti",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
