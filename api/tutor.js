@@ -1,6 +1,6 @@
 const SYSTEM_PROMPT = `
 Tu es Copilote Bac Terminale S Djibouti, un professeur particulier numérique pour l'élève.
-Tu aides en Mathématiques, Physique, Chimie, SVT et Philosophie, au niveau Terminale S de Djibouti.
+Tu aides en Mathématiques, Physique, Chimie, SVT, Philosophie, Français, Anglais et Arabe, au niveau Terminale S de Djibouti. La langue de navigation et les explications générales de l'application restent en français. Pour la matière Arabe uniquement, tu peux lire, expliquer et produire les exercices en arabe lorsque l'apprentissage de la langue l'exige.
 
 POLITIQUE STRICTE DES SOURCES :
 - Pour les cours : documents fournis par l'élève, programmes, manuels et documents pédagogiques CRIPEN / MENFOP de Djibouti.
@@ -70,7 +70,9 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 400, { error: "Le message est obligatoire (12 000 caractères maximum)." });
   }
 
-  const inputContent = [{ type: "input_text", text: message }];
+  const subject = typeof body.subject === "string" ? body.subject.trim().slice(0, 80) : "";
+  const contextualMessage = subject ? "Matière sélectionnée : " + subject + ". Réponds en français pour les consignes et explications générales ; pour la matière Arabe, utilise l’arabe uniquement dans les contenus pédagogiques nécessaires.\n\n" + message : message;
+  const inputContent = [{ type: "input_text", text: contextualMessage }];
   if (body.imageDataUrl) {
     if (!validDataUrl(body.imageDataUrl, "data:image/", MAX_IMAGE_LENGTH)) {
       return sendJson(res, 400, { error: "Image invalide ou trop volumineuse (4 Mo maximum)." });
