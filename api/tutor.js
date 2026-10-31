@@ -26,7 +26,7 @@ Philosophie : niveau lycée, vocabulaire simple, connecteurs logiques et structu
 Style : français simple, naturel, clair et pédagogique. Ne jamais inventer une donnée illisible.
 `;
 
-const MAX_IMAGE_LENGTH = 5_500_000;
+const MAX_IMAGE_LENGTH = 3_800_000;
 const MAX_PDF_LENGTH = 3_800_000;
 
 function sendJson(res, status, payload) {
