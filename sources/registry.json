@@ -1,6 +1,6 @@
 {
   "name": "CRIPEN Terminale S Source Registry",
-  "version": "1.1",
+  "version": "1.2",
   "official_sources": [
     {
       "id": "program_terminal",
@@ -52,35 +52,47 @@
   ],
   "educational_references": [
     {
-      "id": "djibsvt_annales",
-      "title": "Annales et corrigés SVT - Djibouti",
-      "publisher": "Ressource pédagogique SVT associée à l'Inspection / MENFOP",
+      "id": "djibsvt_inspection_annales",
+      "title": "DJIBSVT — site de l'Inspection de SVT de Djibouti",
+      "publisher": "Inspection de l'Enseignement Moyen et Secondaire de SVT, Djibouti",
       "url": "https://sites.google.com/view/djibsvt/lycee/annales-bac",
       "use": [
-        "svt_past_papers",
-        "svt_corrections"
+        "sujets_bac_svt_djibouti_2016_2025",
+        "corriges_bac_svt_djibouti"
       ],
-      "provenance_note": "Ressource pédagogique distincte du portail CRIPEN ; vérifier la provenance de chaque document."
+      "provenance_note": "Portail de l'Inspection SVT ; il liste les sujets du premier groupe 2016-2025 et des corrigés 2016-2023 et 2025. Vérifier le fichier téléchargé et distinguer son émetteur de son hébergement Google."
     },
     {
-      "id": "svt_2025_correction",
-      "title": "Corrigé SVT Bac 2025",
-      "publisher": "Document hébergé sur Google Drive",
-      "url": "https://drive.google.com/file/d/1yoOgH6uYY1VTb5u2rtTNhC0O9-cfTZZU/view",
+      "id": "djib_physique_chimie_inspection",
+      "title": "DJIB_INSPECTION Physique-Chimie — sujets Bac",
+      "publisher": "Inspection de Physique-Chimie de Djibouti",
+      "url": "https://sites.google.com/site/djibinspectionphysiquechimie/lyc%C3%A9e-general/terminale-s/sujets-bac",
       "use": [
-        "svt_correction"
+        "sujets_bac_pc_djibouti_2016_2025",
+        "corriges_bac_pc_djibouti"
       ],
-      "provenance_note": "Hébergement tiers ; ne pas le qualifier d'officiel CRIPEN sans vérification du document."
+      "provenance_note": "Le site se présente comme celui de l'Inspection de Physique-Chimie de Djibouti et liste sujets/corrigés Bac et Bac blanc 2016-2025. Distinguer Bac national et Bac blanc."
     },
     {
-      "id": "svt_2023_correction",
-      "title": "Corrigé SVT Bac 2023",
-      "publisher": "Document hébergé sur Google Drive",
-      "url": "https://drive.google.com/file/d/1GqZ3PzrNTN-jAK8_5M9-JF4C-iufWXMl/view",
+      "id": "futur_bachelier_pc",
+      "title": "Futur Bachelier — Physique-Chimie Terminale S Djibouti",
+      "publisher": "Ressource pédagogique locale ; auteur présenté comme professeur de Physique-Chimie",
+      "url": "https://sites.google.com/view/futurbachelier/sujet-bac/bac",
       "use": [
-        "svt_correction"
+        "sujets_pc_djibouti_2016_2025",
+        "corriges_pc_djibouti"
       ],
-      "provenance_note": "Hébergement tiers ; ne pas le qualifier d'officiel CRIPEN sans vérification du document."
+      "provenance_note": "Ressource secondaire djiboutienne. Utiliser seulement les fichiers qui identifient explicitement Bac S de Djibouti, année et tour ; ne pas lui attribuer le statut CRIPEN."
+    },
+    {
+      "id": "maths_terminale_dj",
+      "title": "MathsTerminaleDj — annales Mathématiques Djibouti",
+      "publisher": "Ressource pédagogique locale",
+      "url": "https://sites.google.com/site/mathsterminaledj/terminale-s/sujets-de-bac-s",
+      "use": [
+        "maths_bac_djibouti_2016_2025"
+      ],
+      "provenance_note": "La page mélange explicitement sujets de France et de Djibouti. N'utiliser que les documents explicitement identifiés comme Bac de Djibouti ; exclure les sujets français."
     }
   ],
   "local_corpus_patterns": [
@@ -115,6 +127,113 @@
     ],
     "ai_correction_label": "Correction proposée par le Copilote — non officielle",
     "generated_exercise_label": "Exercice d'entraînement inédit — non officiel",
-    "missing_source_behavior": "Signaler l'absence du sujet ou corrigé djiboutien ; ne jamais le remplacer par un document étranger."
+    "missing_source_behavior": "Signaler l'absence du sujet ou corrigé djiboutien ; ne jamais le remplacer par un document étranger.",
+    "priority_subjects": [
+      "SVT",
+      "Mathématiques",
+      "Physique-Chimie"
+    ],
+    "supplementary_subjects": [
+      "Philosophie",
+      "Français",
+      "Anglais",
+      "Arabe"
+    ],
+    "foreign_subject_filter": "Toute ressource mélangée doit être filtrée document par document : pays Djibouti obligatoire. Exclure toute épreuve française ou étrangère."
+  },
+  "curriculum": {
+    "official_document": "https://cripen.dj/wp-content/uploads/2025/05/Programme-compile-Terminale.pdf",
+    "confirmed_subject_sections": {
+      "Physique-Chimie": "pp. 3-15 (PDF pages / printed pagination to verify per extraction)",
+      "SVT": "starts at printed page 16",
+      "Philosophie": "starts at printed page 122",
+      "Mathématiques": "starts at printed page 176",
+      "Français": "starts at printed page 70",
+      "Anglais": "starts at printed page 139",
+      "Géographie": "starts at printed page 163",
+      "Arabe": "starts at printed page 231"
+    },
+    "note": "The PDF is a compiled Terminale curriculum; verify the exact series-specific section before treating every listed discipline as a Terminale S examination subject."
+  },
+  "bac_catalog": {
+    "series": "S",
+    "country": "Djibouti",
+    "official_cripen_index": "https://cripen.dj/index.php/serie-s/",
+    "verified_years_on_index": {
+      "2016": [
+        "Mathématiques",
+        "Philosophie",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ],
+      "2017": [
+        "Mathématiques",
+        "Philosophie",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ],
+      "2019": [
+        "Mathématiques",
+        "Philosophie",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais"
+      ],
+      "2025": [
+        "Mathématiques",
+        "Physique-Chimie",
+        "SVT",
+        "Philosophie",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ]
+    },
+    "corrections_listed_by_cripen": {
+      "2016": [
+        "Mathématiques",
+        "Philosophie",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ],
+      "2017": [
+        "Mathématiques (2e tour visible dans l'index)",
+        "Philosophie",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ],
+      "2019": [
+        "Mathématiques",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais"
+      ],
+      "2025": [
+        "Mathématiques",
+        "Physique-Chimie",
+        "SVT",
+        "Français",
+        "Anglais",
+        "Arabe"
+      ]
+    },
+    "gaps": [
+      "L'index CRIPEN consulté ne présente pas de liste détaillée complète pour chaque année entre 2020 et 2024.",
+      "Pour chaque téléchargement, contrôler le document lui-même, son année, sa série, son tour et sa matière."
+    ]
   }
 }
