@@ -8,7 +8,11 @@ const modes=[
   ['/photo-corrige','Corriger une photo'],
   ['/quiz-cours','Quiz'],
   ['/fiche-revision','Fiche de révision'],
-  ['/exo-type-bac','Exercice type Bac']
+  ['/exo-type-bac','Exercice type Bac'],
+  ['/bac-blanc','Simulation Bac blanc'],
+  ['/schema','Schéma explicatif'],
+  ['/graphique','Lire un graphique'],
+  ['/preparation-bac','Mon parcours de préparation']
 ];
 
 let subject='Mathématiques';
