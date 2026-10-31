@@ -14,6 +14,7 @@ const modes=[
 let subject='Mathématiques';
 let conversationId=localStorage.getItem('copiloteConversationId')||null;
 let messages=JSON.parse(localStorage.getItem('copiloteMessages')||'[]');
+let selectedPdf=null;
 const root=document.getElementById('app');
 
 function save(){
@@ -43,6 +44,7 @@ function render(){
       <div id="history" class="history">${messages.map(m=>`<div class="bubble ${m.role}"><strong>${m.role==='user'?'Deksan':'Copilote'}</strong><p></p></div>`).join('')}</div>
       <textarea id="prompt" placeholder="Pose ta question ou choisis un outil…"></textarea>
       <label class="photo">📷 Ajouter une photo<input id="photo" type="file" accept="image/*" capture="environment"></label>
+      <label class="photo">📄 Ajouter un sujet PDF<input id="pdf" type="file" accept="application/pdf,.pdf"></label>
       <div class="send-row"><span id="status">${API_URL?'Prêt':'URL API à configurer'}</span><button id="send">Envoyer</button></div>
     </section>
   </main>`;
@@ -57,7 +59,8 @@ function render(){
   document.getElementById('send').onclick=async()=>{
     const prompt=document.getElementById('prompt');
     const file=document.getElementById('photo').files?.[0];
-    const text=prompt.value.trim()||(file?'/photo-corrige — Corrige cet exercice étape par étape.':'');
+    selectedPdf=document.getElementById('pdf').files?.[0]||null;
+    const text=prompt.value.trim()||((file||selectedPdf)?'/photo-corrige — Analyse le document et accompagne-moi étape par étape.':'');
     if(!text)return;
     if(!API_URL){document.getElementById('status').textContent='Configurer VITE_TUTOR_API_URL';return}
     if(file&&file.size>4_000_000){document.getElementById('status').textContent='Photo trop volumineuse (max 4 Mo)';return}
@@ -68,12 +71,15 @@ function render(){
 
     try{
       const imageDataUrl=file?await fileToDataUrl(file):null;
-      const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,imageDataUrl,subject,conversationId})});
+      const pdfDataUrl=selectedPdf?await fileToDataUrl(selectedPdf):null;
+      const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,imageDataUrl,pdfDataUrl,subject,conversationId})});
       const data=await res.json().catch(()=>({}));
       if(!res.ok)throw new Error(data.error||'Erreur du serveur');
       conversationId=data.conversationId||conversationId;
       messages.push({role:'assistant',text:data.answer||'Aucune réponse.'});
       save();render();
+      document.getElementById('photo').value='';document.getElementById('pdf').value='';selectedPdf=null;
+      document.getElementById('status').textContent='Réponse reçue';
     }catch(e){
       messages.push({role:'assistant',text:'Erreur : '+e.message});save();render();
     }
