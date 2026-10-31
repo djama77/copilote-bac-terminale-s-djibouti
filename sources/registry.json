@@ -88,5 +88,33 @@
     "corpus/physics/*.pdf",
     "corpus/svt/*.pdf",
     "corpus/bac/*.pdf"
-  ]
+  ],
+  "source_policy": {
+    "course_sources": [
+      "CRIPEN",
+      "MENFOP Djibouti",
+      "documents fournis par l'élève"
+    ],
+    "bac_exam_country": "Djibouti",
+    "allowed_exam_sources": [
+      "CRIPEN / MENFOP Djibouti",
+      "archives djiboutiennes vérifiables"
+    ],
+    "allowed_correction_sources": [
+      "CRIPEN / MENFOP Djibouti",
+      "Inspection compétente de Djibouti",
+      "corrigés fournis avec provenance djiboutienne vérifiable"
+    ],
+    "reject_foreign_bac_material": true,
+    "require_exact_match": [
+      "country",
+      "year",
+      "series",
+      "group",
+      "subject"
+    ],
+    "ai_correction_label": "Correction proposée par le Copilote — non officielle",
+    "generated_exercise_label": "Exercice d'entraînement inédit — non officiel",
+    "missing_source_behavior": "Signaler l'absence du sujet ou corrigé djiboutien ; ne jamais le remplacer par un document étranger."
+  }
 }
