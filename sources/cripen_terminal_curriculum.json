@@ -1,0 +1,117 @@
+{
+  "title": "Programme de l’enseignement secondaire — Classe de Terminale",
+  "publisher": "CRIPEN / MENFOP — République de Djibouti",
+  "url": "https://cripen.dj/wp-content/uploads/2025/05/Programme-compile-Terminale.pdf",
+  "pagination": "Les références ci-dessous sont les numéros de pages imprimés dans le document. Pour les matières où seul le début de section est confirmé, l’application ne doit pas inventer une page précise de chapitre.",
+  "subjects": {
+    "Physique": [
+      {
+        "chapter": "Évolution temporelle d’un système mécanique",
+        "pages": "3–5",
+        "topics": [
+          "Chute verticale et chute libre",
+          "Oscillateur mécanique",
+          "Mouvement des projectiles",
+          "Satellites et planètes"
+        ]
+      },
+      {
+        "chapter": "Ondes mécaniques et électromagnétisme",
+        "pages": "5–9",
+        "topics": [
+          "Ondes mécaniques",
+          "Sons et ultrasons",
+          "Ondes électromagnétiques",
+          "Champs électrique et magnétique"
+        ]
+      },
+      {
+        "chapter": "Transmission et stockage de l’information",
+        "pages": "10–11",
+        "topics": [
+          "Chaînes de transmission",
+          "Signal analogique et numérique",
+          "Images numériques et stockage optique"
+        ]
+      }
+    ],
+    "Chimie": [
+      {
+        "chapter": "Environnement : air et eau",
+        "pages": "11–12",
+        "topics": [
+          "Pollution de l’air et de l’eau",
+          "Traitement de l’eau",
+          "Ressources de l’eau de mer"
+        ]
+      },
+      {
+        "chapter": "Produire mieux",
+        "pages": "12–14",
+        "topics": [
+          "Cinétique chimique",
+          "Catalyse",
+          "Estérification et hydrolyse",
+          "Réactions acido-basiques"
+        ]
+      },
+      {
+        "chapter": "Contrôler la qualité",
+        "pages": "14–15",
+        "topics": [
+          "Chiralité et représentation de Cram",
+          "Spectres UV-visible, IR et RMN",
+          "Dosages et titrages"
+        ]
+      }
+    ],
+    "SVT": [
+      {
+        "chapter": "Programme de SVT — section à consulter",
+        "pages": "à partir de 16",
+        "topics": [],
+        "precision": "La page 16 est le début de la section SVT dans le sommaire. Les pages précises des chapitres doivent être établies à partir du PDF complet."
+      }
+    ],
+    "Français": [
+      {
+        "chapter": "Programme de Français — section à consulter",
+        "pages": "à partir de 70",
+        "topics": [],
+        "precision": "Début de section indiqué dans le sommaire."
+      }
+    ],
+    "Philosophie": [
+      {
+        "chapter": "Programme de Philosophie — section à consulter",
+        "pages": "à partir de 122",
+        "topics": [],
+        "precision": "Début de section indiqué dans le sommaire."
+      }
+    ],
+    "Anglais": [
+      {
+        "chapter": "Programme d’Anglais — section à consulter",
+        "pages": "à partir de 139",
+        "topics": [],
+        "precision": "Début de section indiqué dans le sommaire."
+      }
+    ],
+    "Mathématiques": [
+      {
+        "chapter": "Programme de Mathématiques — section à consulter",
+        "pages": "à partir de 176",
+        "topics": [],
+        "precision": "Début de section indiqué dans le sommaire ; les chapitres détaillés sont à indexer."
+      }
+    ],
+    "Arabe": [
+      {
+        "chapter": "Programme d’Arabe — section à consulter",
+        "pages": "à partir de 231",
+        "topics": [],
+        "precision": "Matière scolaire conservée ; l’interface et les consignes générales restent en français."
+      }
+    ]
+  }
+}
