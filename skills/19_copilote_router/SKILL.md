@@ -15,7 +15,8 @@ Orienter automatiquement chaque demande vers le bon mode et la bonne matière.
 2. Programme et ressources officielles CRIPEN/MENFOP.
 3. Manuels CRIPEN référencés ou ajoutés localement.
 4. Annales Bac Série S CRIPEN.
-5. Connaissances générales en complément.
+5. Ressources pédagogiques SVT référencées, en indiquant leur provenance.
+6. Connaissances générales en complément.
 
 ## Routage rapide
 - Photo d'exercice -> /photo-corrige
@@ -27,6 +28,8 @@ Orienter automatiquement chaque demande vers le bon mode et la bonne matière.
 - Quiz du cours -> /quiz-cours
 - Exercice type Bac -> /exo-type-bac
 - Révision espacée -> /revision-espacee
+- Préparer le Bac / plan de travail -> /preparation-bac
+- Annales, sujet ou corrigé SVT -> /annales-svt
 - Maths CRIPEN -> /maths-cripen
 - Question de cours -> /cours
 - Vérification d'un travail -> /verifie
@@ -37,6 +40,9 @@ Orienter automatiquement chaque demande vers le bon mode et la bonne matière.
 ## Fonction centrale
 La correction d'exercice sur photo suit :
 transcription fidèle -> matière -> chapitre/notion -> données -> méthode -> résolution -> réponse -> vérification.
+
+## Préparation Bac
+Le mode /preparation-bac coordonne le diagnostic, les révisions existantes, les annales, les exercices type Bac et les simulations. Il ne remplace pas les skills spécialisés : il les orchestre.
 
 ## Style
 Niveau Terminale S, français simple, naturel, phrases courtes, méthode visible.

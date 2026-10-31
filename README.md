@@ -1,114 +1,46 @@
 # Copilote Bac Terminale S — Djibouti
 
-Projet pédagogique open source destiné à accompagner les élèves de Terminale série S à Djibouti.
+Projet pédagogique open source pour accompagner les élèves de Terminale S à Djibouti en Mathématiques, Physique, Chimie, SVT et Philosophie.
 
-## Objectif
+## Préparation au Bac — V2.1
 
-Le projet regroupe des skills pédagogiques pour :
-- comprendre et réviser le programme ;
-- expliquer les cours simplement ;
-- corriger des exercices pas à pas ;
-- diagnostiquer les erreurs ;
-- générer des indices, quiz et exercices similaires ;
-- préparer des devoirs et des Bac blancs ;
-- travailler les Mathématiques, la Physique, la Chimie, la SVT et la Philosophie.
+Le tableau de bord comprend désormais un parcours **Préparation au Bac** :
+- /preparation-bac : diagnostic, priorités par matière, planning et suivi des progrès ;
+- /bac-blanc : simulation d'épreuve avec tentative avant correction ;
+- /revision et /revision-espacee : renforcement et mémorisation ;
+- /exo-type-bac : entraînement sur des exercices originaux ;
+- /fiche-revision, /flashcards et /quiz-cours : consolidation des connaissances.
 
-## Skills
+Le nouveau skill skills/35_bac_preparation_coach/SKILL.md orchestre les modules existants sans les dupliquer.
 
-Le dossier `skills/` contient désormais 34 modules. La V2 ajoute : analyse d'une photo de cours, comparaison au programme CRIPEN, fiche de révision, flashcards, carte mentale, quiz basé sur le cours, exercice type Bac, révision espacée, correction centrale d'exercices photo et référence Mathématiques CRIPEN.
+## Annales et corrigés SVT — Djibouti
 
-### Fonctions V2
-- `/photo-corrige` : correction complète d'un exercice à partir d'une photo.
-- `/analyse-cours` : analyse d'une page de cours photographiée.
-- `/compare-programme` : comparaison avec le programme CRIPEN.
-- `/fiche-revision` : génération d'une fiche synthétique.
-- `/flashcards` : cartes Question/Réponse.
-- `/carte-mentale` : carte mentale textuelle.
-- `/quiz-cours` : quiz uniquement sur le cours étudié.
-- `/exo-type-bac` : exercice original niveau Bac S Djibouti.
-- `/revision-espacee` : réactivation progressive des notions déjà étudiées.
+La rubrique « Sujets et corrigés de SVT » donne accès directement à la page d'annales SVT de Djibouti, au portail Annales Bac Série S du CRIPEN et aux documents de correction SVT 2025 et 2023 référencés.
 
-### Mathématiques CRIPEN
-Le projet référence maintenant le programme officiel, le manuel élève « Mathématiques — Terminale Scientifique (S) » du CRIPEN (édition 2015), les annales Bac Série S et le soutien scolaire CRIPEN. Le manuel indique l'existence d'un guide pédagogique et/ou support numérique, mais aucun PDF public officiel du guide professeur de Mathématiques Terminale S n'a été retrouvé de façon fiable lors de la recherche du 14 octobre 2026. Le dépôt prévoit donc un emplacement local pour l'ajouter si l'utilisateur le possède légalement.
+**Important :** la page CRIPEN est une source institutionnelle. La page DJIBSVT est une ressource pédagogique SVT associée à l'Inspection/MENFOP. Les fichiers Google Drive sont hébergés par un tiers. Leur provenance doit être vérifiée sur chaque document ; ils ne sont pas automatiquement qualifiés de corrigés officiels CRIPEN. Les liens externes peuvent changer ou demander une connexion.
 
-## Commandes utiles
+## Skills et commandes
 
-`/photo-corrige` · `/transcription` · `/corrige` · `/explique-simple` · `/indice` · `/verifie` · `/exo-similaire` · `/erreurs` · `/mode-bac` · `/quiz` · `/mode-devoir` · `/bac-blanc` · `/philo` · `/revision`
+Le dossier skills contient maintenant 35 modules déclarés dans manifest.yaml.
 
-## Sources
+Commandes principales : /preparation-bac · /annales-svt · /bac-blanc · /revision · /revision-espacee · /exo-type-bac · /photo-corrige · /fiche-revision · /quiz-cours · /compare-programme
 
-Priorité recommandée :
-1. documents fournis par l'utilisateur ;
-2. programme et ressources officielles CRIPEN/MENFOP ;
-3. manuels ou corrigés que l'utilisateur a le droit d'utiliser ;
-4. connaissances générales en complément.
+## Sources et règles
 
-Les PDF de manuels/corrigés ne sont pas redistribués dans ce dépôt public.
+Priorité : documents fournis par l'utilisateur ; programme et ressources officielles CRIPEN/MENFOP ; annales CRIPEN et ressources pédagogiques SVT référencées avec provenance explicitée ; manuels et corrigés autorisés ; connaissances générales en complément.
 
-## Utilisation
+Ne jamais prétendre qu'un contenu est CRIPEN officiel s'il ne vient pas d'une source CRIPEN/MENFOP vérifiable. Les PDF ne sont pas redistribués dans ce dépôt public.
 
-Lire d'abord :
-1. `PROMPT_MAITRE_COPILOTE_BAC.md`
-2. `manifest.yaml`
-3. le `SKILL.md` correspondant à la tâche.
+## Interface web
 
-## Statut
+- index.html : tableau de bord mobile-first, Préparation au Bac et Annales SVT ;
+- styles.css : design responsive ;
+- app.js : navigation, commandes, photo et ajout de sujet PDF ;
+- manifest.webmanifest et sw.js : base PWA installable ;
+- api/tutor.js : intégration OpenAI côté serveur.
 
-Version publique initiale du projet Copilote Bac Terminale S — Djibouti.
+La clé API reste exclusivement côté serveur. Ne jamais placer OPENAI_API_KEY dans le navigateur, GitHub Actions publiques ou l'APK.
 
-
-## Interface web V1
-
-Une interface mobile-first est maintenant incluse à la racine du dépôt :
-
-- `index.html` — tableau de bord principal ;
-- `styles.css` — design responsive ;
-- `app.js` — boutons, sélection de matière, photo et préparation des commandes ;
-- `manifest.webmanifest` + `sw.js` — base PWA installable ;
-- `vercel.json` — déploiement statique Vercel.
-
-### Boutons principaux
-`/photo-corrige` · `/analyse-cours` · `/fiche-revision` · `/flashcards` · `/quiz-cours` · `/carte-mentale` · `/exo-type-bac` · `/compare-programme` · `/revision-espacee`
-
-> Le bouton **Envoyer** est maintenant connecté à `/api/tutor`. La clé API reste exclusivement côté serveur.
-
-## Chatbot ChatGPT / OpenAI API
-
-Le bouton **Envoyer** utilise désormais directement l'API OpenAI côté serveur via `/api/tutor`.
-
-Fonctions :
-- conversation multi-tours avec un `conversationId` OpenAI ;
-- historique local dans le navigateur / WebView Android ;
-- bouton **Nouvelle conversation** ;
-- envoi de photos pour les exercices ;
-- conservation des 34 Skills et des commandes pédagogiques existantes ;
-- clé OpenAI jamais exposée dans le navigateur ou dans l'APK.
-
-L'intégration utilise l'API **Responses** et les **Conversations** OpenAI.
-
-### Variables serveur
-
-Dans l'hébergeur du backend, ajouter :
-
-- `OPENAI_API_KEY` : clé API OpenAI privée ;
-- `OPENAI_MODEL` : modèle à utiliser, par exemple `gpt-6-luna`.
-
-Ne jamais placer `OPENAI_API_KEY` dans `app.js`, GitHub Actions publiques ou l'APK.
-
-### Architecture
-
-```
-Android / PWA
-   ↓
-/api/tutor
-   ↓
-OpenAI Responses API
-   ↓
-Conversation OpenAI
-   ↓
-Réponse ChatGPT
-```
-
-Pour l'application Capacitor Android, le backend autorise également les origines locales habituelles de la WebView (`https://localhost`, `http://localhost`, `capacitor://localhost`).
+Le chatbot utilise l'API OpenAI via /api/tutor, avec conversation multi-tours, historique local, envoi de photos et de sujets PDF. Le modèle est configuré avec OPENAI_MODEL (valeur par défaut du code : gpt-4.1-mini).
 
 Après modification des variables d'environnement, redéployer le backend.

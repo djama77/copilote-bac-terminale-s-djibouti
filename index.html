@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1220" />
-  <meta name="description" content="Copilote Bac Terminale S Djibouti — CRIPEN, correction photo, révision et entraînement." />
+  <meta name="description" content="Copilote Bac Terminale S Djibouti — CRIPEN, annales, sujets et corrigés, révision et entraînement." />
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./styles.css" />
   <title>Copilote Bac Terminale S — Djibouti</title>
@@ -15,7 +15,7 @@
       <div>
         <div class="eyebrow">TERMINALE S • DJIBOUTI</div>
         <h1>Copilote Bac</h1>
-        <p>Ton assistant CRIPEN pour comprendre, réviser et corriger.</p>
+        <p>Ton assistant pour comprendre, réviser et réussir le Bac.</p>
       </div>
       <button id="installBtn" class="ghost-btn" hidden>Installer</button>
     </header>
@@ -30,141 +30,94 @@
         <div class="hero-icon">🎓</div>
       </section>
 
+      <section class="bac-prep" id="preparation-bac" aria-labelledby="bacPrepTitle">
+        <div class="bac-prep-heading">
+          <div><span class="eyebrow">PARCOURS BAC</span><h2 id="bacPrepTitle">Préparation au Bac</h2>
+          <p>Révise avec méthode, entraîne-toi en conditions d’examen et consulte les annales de Djibouti.</p></div>
+          <span class="bac-prep-icon">🏅</span>
+        </div>
+        <div class="prep-grid">
+          <button class="prep-card prep-primary" data-command="/preparation-bac">
+            <span class="icon">🎯</span><span class="title">Mon plan de préparation</span>
+            <span class="desc">Diagnostic, planning de révision, priorités et suivi par matière.</span>
+          </button>
+          <button class="prep-card" data-command="/bac-blanc">
+            <span class="icon">⏱️</span><span class="title">Simulation Bac blanc</span>
+            <span class="desc">Sujet, temps conseillé, tentative puis correction et bilan.</span>
+          </button>
+          <button class="prep-card" data-command="/revision">
+            <span class="icon">📚</span><span class="title">Renforcement ciblé</span>
+            <span class="desc">Repérer les difficultés et reprendre les notions fragiles.</span>
+          </button>
+          <button class="prep-card" data-command="/exo-type-bac">
+            <span class="icon">✍️</span><span class="title">Exercices type Bac</span>
+            <span class="desc">S’entraîner sur des exercices originaux niveau Terminale S.</span>
+          </button>
+        </div>
+        <div class="annales-panel">
+          <div class="annales-heading"><div><span class="eyebrow">ANNALES DJIBOUTI</span><h3>Sujets et corrigés de SVT</h3>
+          <p>Accès direct aux annales disponibles. Les liens ouvrent les ressources dans un nouvel onglet.</p></div><span class="annales-icon">🧬</span></div>
+          <div class="annales-links">
+            <a class="resource-link" href="https://sites.google.com/view/djibsvt/lycee/annales-bac" target="_blank" rel="noopener noreferrer">
+              <strong>📂 Toutes les annales SVT</strong><span>Sujets et corrigés des 1er et 2e groupes, selon les années disponibles.</span><small>Site de ressources SVT – Inspection / MENFOP</small>
+            </a>
+            <a class="resource-link" href="https://cripen.dj/index.php/serie-s/" target="_blank" rel="noopener noreferrer">
+              <strong>🏛️ Annales Bac Série S – CRIPEN</strong><span>Consulter les annales et ressources publiées par le CRIPEN.</span><small>Source institutionnelle</small>
+            </a>
+            <a class="resource-link" href="https://drive.google.com/file/d/1yoOgH6uYY1VTb5u2rtTNhC0O9-cfTZZU/view" target="_blank" rel="noopener noreferrer">
+              <strong>📄 Corrigé SVT – Bac 2025</strong><span>Ouvrir directement le document de correction référencé.</span><small>Google Drive – document externe</small>
+            </a>
+            <a class="resource-link" href="https://drive.google.com/file/d/1GqZ3PzrNTN-jAK8_5M9-JF4C-iufWXMl/view" target="_blank" rel="noopener noreferrer">
+              <strong>📄 Corrigé SVT – Bac 2023</strong><span>Ouvrir directement le document de correction référencé.</span><small>Google Drive – document externe</small>
+            </a>
+          </div>
+          <p class="source-note">Vérifie l’année et le groupe avant de travailler. Les documents externes peuvent être déplacés ou nécessiter un accès Google.</p>
+        </div>
+      </section>
+
       <section class="quick-grid" aria-label="Actions principales">
-        <button class="action-card featured" data-command="/photo-corrige">
-          <span class="icon">📷</span>
-          <span class="title">Corriger un exercice</span>
-          <span class="desc">Photo → transcription → méthode → correction</span>
-        </button>
-
-        <button class="action-card" data-command="/analyse-cours">
-          <span class="icon">📖</span>
-          <span class="title">Analyser mon cours</span>
-          <span class="desc">Identifier chapitre, notions et contenu</span>
-        </button>
-
-        <button class="action-card" data-command="/fiche-revision">
-          <span class="icon">📘</span>
-          <span class="title">Fiche de révision</span>
-          <span class="desc">L’essentiel du cours, clair et court</span>
-        </button>
-
-        <button class="action-card" data-command="/flashcards">
-          <span class="icon">🧠</span>
-          <span class="title">Flashcards</span>
-          <span class="desc">Questions-réponses pour mémoriser</span>
-        </button>
-
-        <button class="action-card" data-command="/quiz-cours">
-          <span class="icon">❓</span>
-          <span class="title">Quiz du cours</span>
-          <span class="desc">5 ou 10 questions ciblées</span>
-        </button>
-
-        <button class="action-card" data-command="/carte-mentale">
-          <span class="icon">🗺️</span>
-          <span class="title">Carte mentale</span>
-          <span class="desc">Voir le chapitre en un coup d’œil</span>
-        </button>
-
-        <button class="action-card" data-command="/exo-type-bac">
-          <span class="icon">📝</span>
-          <span class="title">Exercice type Bac</span>
-          <span class="desc">Nouvel exercice niveau Bac S Djibouti</span>
-        </button>
-
-        <button class="action-card" data-command="/compare-programme">
-          <span class="icon">📋</span>
-          <span class="title">Comparer au programme</span>
-          <span class="desc">Présent, à compléter ou manquant</span>
-        </button>
-
-        <button class="action-card" data-command="/revision-espacee">
-          <span class="icon">🔁</span>
-          <span class="title">Révision espacée</span>
-          <span class="desc">Revoir les notions au bon moment</span>
-        </button>
+        <button class="action-card featured" data-command="/photo-corrige"><span class="icon">📷</span><span class="title">Corriger un exercice</span><span class="desc">Photo → transcription → méthode → correction</span></button>
+        <button class="action-card" data-command="/analyse-cours"><span class="icon">📖</span><span class="title">Analyser mon cours</span><span class="desc">Identifier chapitre, notions et contenu</span></button>
+        <button class="action-card" data-command="/fiche-revision"><span class="icon">📘</span><span class="title">Fiche de révision</span><span class="desc">L’essentiel du cours, clair et court</span></button>
+        <button class="action-card" data-command="/flashcards"><span class="icon">🧠</span><span class="title">Flashcards</span><span class="desc">Questions-réponses pour mémoriser</span></button>
+        <button class="action-card" data-command="/quiz-cours"><span class="icon">❓</span><span class="title">Quiz du cours</span><span class="desc">5 ou 10 questions ciblées</span></button>
+        <button class="action-card" data-command="/carte-mentale"><span class="icon">🗺️</span><span class="title">Carte mentale</span><span class="desc">Voir le chapitre en un coup d’œil</span></button>
+        <button class="action-card" data-command="/exo-type-bac"><span class="icon">📝</span><span class="title">Exercice type Bac</span><span class="desc">Nouvel exercice niveau Bac S Djibouti</span></button>
+        <button class="action-card" data-command="/compare-programme"><span class="icon">📋</span><span class="title">Comparer au programme</span><span class="desc">Présent, à compléter ou manquant</span></button>
+        <button class="action-card" data-command="/revision-espacee"><span class="icon">🔁</span><span class="title">Révision espacée</span><span class="desc">Revoir les notions au bon moment</span></button>
       </section>
 
       <section class="quick-grid" aria-label="Outils de mathématiques">
         <a class="action-card geogebra-card" href="https://www.geogebra.org/calculator" target="_blank" rel="noopener noreferrer" aria-label="Ouvrir GeoGebra en ligne dans un nouvel onglet">
-          <span class="icon">📈</span>
-          <span class="title">GeoGebra en ligne</span>
-          <span class="desc">Tracer des fonctions, explorer les courbes et visualiser les mathématiques. Sans clé API.</span>
+          <span class="icon">📈</span><span class="title">GeoGebra en ligne</span><span class="desc">Tracer des fonctions, explorer les courbes et visualiser les mathématiques. Sans clé API.</span>
         </a>
       </section>
 
-      <section class="subjects">
-        <div class="section-head">
-          <div>
-            <span class="eyebrow">MATIÈRES</span>
-            <h3>Choisir une matière</h3>
-          </div>
-        </div>
+      <section class="subjects"><div class="section-head"><div><span class="eyebrow">MATIÈRES</span><h3>Choisir une matière</h3></div></div>
         <div class="subject-row">
-          <button class="subject math" data-subject="Mathématiques">∑ <span>Maths</span></button>
-          <button class="subject physics" data-subject="Physique">⚛ <span>Physique</span></button>
-          <button class="subject chemistry" data-subject="Chimie">⚗ <span>Chimie</span></button>
-          <button class="subject svt" data-subject="SVT">🧬 <span>SVT</span></button>
-          <button class="subject philo" data-subject="Philosophie">💭 <span>Philo</span></button>
+          <button class="subject math" data-subject="Mathématiques">∑ <span>Maths</span></button><button class="subject physics" data-subject="Physique">⚛ <span>Physique</span></button><button class="subject chemistry" data-subject="Chimie">⚗ <span>Chimie</span></button><button class="subject svt" data-subject="SVT">🧬 <span>SVT</span></button><button class="subject philo" data-subject="Philosophie">💭 <span>Philo</span></button>
         </div>
       </section>
 
       <section class="assistant-panel" id="assistantPanel">
-        <div class="assistant-head">
-          <div class="avatar">AI</div>
-          <div>
-            <strong>Assistant Copilote</strong>
-            <span id="statusText">Prêt</span>
-          </div>
-        </div>
-
-        <div class="assistant-tools">
-          <button id="newChatBtn" class="ghost-btn" type="button">＋ Nouvelle conversation</button>
-        </div>
-
+        <div class="assistant-head"><div class="avatar">AI</div><div><strong>Assistant Copilote</strong><span id="statusText">Prêt</span></div></div>
+        <div class="assistant-tools"><button id="newChatBtn" class="ghost-btn" type="button">＋ Nouvelle conversation</button></div>
         <div id="chatHistory" class="chat-history" aria-live="polite"></div>
-
         <div class="composer">
           <textarea id="promptInput" rows="3" placeholder="Exemple : /photo-corrige — corrige cet exercice étape par étape"></textarea>
-
-          <div class="attachments" id="attachmentPreview" hidden>
-            <img id="previewImage" alt="Aperçu de la pièce jointe sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span>
-            <button id="removeImage" class="remove" aria-label="Retirer la photo">×</button>
-          </div>
-
+          <div class="attachments" id="attachmentPreview" hidden><img id="previewImage" alt="Aperçu de la pièce jointe sélectionnée" /><span id="pdfPreviewName" aria-live="polite"></span><button id="removeImage" class="remove" aria-label="Retirer la photo">×</button></div>
           <div class="composer-actions">
-            <label class="upload-btn">
-              <input id="photoInput" type="file" accept="image/*" hidden />
-              🖼️ Galerie
-            </label>
-            <label class="upload-btn">
-              <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
-              📷 Prendre une photo
-            </label>
-            <label class="upload-btn">
-              <input id="pdfInput" type="file" accept="application/pdf,.pdf" hidden />
-              📄 Ajouter un sujet PDF
-            </label>
+            <label class="upload-btn"><input id="photoInput" type="file" accept="image/*" hidden />🖼️ Galerie</label>
+            <label class="upload-btn"><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />📷 Prendre une photo</label>
+            <label class="upload-btn"><input id="pdfInput" type="file" accept="application/pdf,.pdf" hidden />📄 Ajouter un sujet PDF</label>
             <button id="sendBtn" class="send-btn">Envoyer</button>
           </div>
         </div>
-
-        <div class="demo-response" id="demoResponse" hidden>
-          <strong id="responseTitle">Copilote Bac</strong>
-          <p id="demoText"></p>
-          <small id="responseNote"></small>
-        </div>
+        <div class="demo-response" id="demoResponse" hidden><strong id="responseTitle">Copilote Bac</strong><p id="demoText"></p><small id="responseNote"></small></div>
       </section>
     </main>
-
-    <nav class="bottom-nav" aria-label="Navigation principale">
-      <button class="active">⌂<span>Accueil</span></button>
-      <button data-scroll="subjects">▦<span>Matières</span></button>
-      <button data-scroll="assistantPanel">✦<span>Assistant</span></button>
-    </nav>
+    <nav class="bottom-nav" aria-label="Navigation principale"><button class="active">⌂<span>Accueil</span></button><button data-scroll="subjects">▦<span>Matières</span></button><button data-scroll="assistantPanel">✦<span>Assistant</span></button></nav>
   </div>
-
   <script src="./app.js"></script>
 </body>
 </html>

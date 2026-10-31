@@ -1,5 +1,5 @@
 name: COPILOTE_BAC_TERMINALE_S_DJIBOUTI
-version: 2.0
+version: 2.1
 language: fr
 country: Djibouti
 level: Terminale S
@@ -39,6 +39,7 @@ skills:
   - skills/32_spaced_revision_engine/SKILL.md
   - skills/33_photo_exercise_corrector/SKILL.md
   - skills/34_math_cripen_reference/SKILL.md
+  - skills/35_bac_preparation_coach/SKILL.md
 source_registry: sources/registry.json
 teacher_commands: config/teacher_commands.json
 copilote_commands: config/copilote_commands.json
