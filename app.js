@@ -373,6 +373,7 @@ document.getElementById("studentSignOut")?.addEventListener("click",async()=>{
   document.getElementById("studentSignIn").hidden=false;
   document.getElementById("studentSignUp").hidden=false;
   saveProgressButton.disabled=true;
+  document.getElementById("saveQuizResult").disabled=true;
   renderProgressRows([]);
   dashboardMessage("Déconnecté.");
 });
