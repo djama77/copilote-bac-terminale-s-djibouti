@@ -19,6 +19,10 @@ La rubrique « Sujets et corrigés de SVT » donne accès directement à la page
 
 **Important :** la page CRIPEN est une source institutionnelle. La page DJIBSVT est une ressource pédagogique SVT associée à l'Inspection/MENFOP. Les fichiers Google Drive sont hébergés par un tiers. Leur provenance doit être vérifiée sur chaque document ; ils ne sont pas automatiquement qualifiés de corrigés officiels CRIPEN. Les liens externes peuvent changer ou demander une connexion.
 
+## Annales et corrigés Mathématiques — Bac S 2025
+
+La rubrique « Mathématiques — Baccalauréat 2025 » de l'application donne accès aux sujets et corrigés du premier et du second tour publiés dans la rubrique Série S du CRIPEN. Les quatre PDF sont enregistrés dans le registre des sources avec leur tour et leur type (sujet / corrigé). Les deux sessions restent distinctes.
+
 ## Skills et commandes
 
 Le dossier skills contient maintenant 35 modules déclarés dans manifest.yaml.
