@@ -53,6 +53,7 @@ function normalizeHistory(history, message, subject) {
     });
   }
 
+  if (contents[0] && contents[0].role === "model") contents.shift();
   const latest = contents[contents.length - 1];
   if (!latest || latest.role !== "user" || !latest.parts[0].text.includes(message)) {
     const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\n\n");
