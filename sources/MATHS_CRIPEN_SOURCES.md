@@ -40,7 +40,34 @@ Cependant, aucune version publique officielle du guide Mathématiques Terminale 
 - Contient des sujets et corrections de Mathématiques pour plusieurs années, dont 2016, 2017, 2019 et 2025.
 - Usage : niveau, style, compétences et entraînement type Bac.
 
-## 5. Soutien scolaire
+## 5. Annales et corrigés Mathématiques — Bac S 2025
+
+La page institutionnelle **CRIPEN — Série S** présente les sujets et les rubriques de correction du premier et du second tour 2025. Les quatre PDF ci-dessous ont été ouverts et contrôlés sur le portail CRIPEN.
+
+### Premier tour — Session 2025
+- Sujet : https://cripen.dj/wp-content/uploads/2026/04/MATHS-Bac-S-sujet-2-2025.pdf
+- Corrigé et barème : https://cripen.dj/wp-content/uploads/2026/04/Corrige-BAC-S_2025_MATHS.pdf
+- Vérifications visibles sur le sujet : Baccalauréat général, session 2025, Mathématiques, Série S, durée 4 heures, coefficient 9, quatre exercices.
+- Le corrigé est intitulé « Série S — CORRECTION 25MATS2 » et comporte les réponses, démarches et consignes de barème.
+
+### Second tour — Session 2025
+- Sujet : https://cripen.dj/wp-content/uploads/2026/04/BAC-S-second-Tour-Sujet-2-2025.pdf
+- Corrigé et barème : https://cripen.dj/wp-content/uploads/2026/04/Corrige-BAC-S-second-Tour-Sujet-2025-.pdf
+- Vérifications visibles sur le sujet : Baccalauréat général, session 2025, Mathématiques, Série S, épreuve de second tour, durée 2 heures, coefficient 9.
+- Le corrigé est intitulé « Série S second tour 2025 — Correction et barème ».
+
+### Notions repérées pour l'indexation pédagogique
+- Premier tour : nombres complexes, loi normale, probabilités d'événements indépendants, numération en base 8, intervalle de confiance, suites définies par récurrence, étude de fonction, limites et asymptotes, dérivation, intégrales, géométrie dans l'espace.
+- Second tour : logarithme népérien, nombres complexes et arguments, triangle rectangle isocèle, suites et limites, loi normale, dérivation et variations, divisibilité et récurrence, intégrales, géométrie dans l'espace, suites géométriques et programmation Python, probabilités conditionnelles et arbre pondéré.
+
+### Statut et règles d'utilisation
+- Source de référence : page officielle CRIPEN Série S : https://cripen.dj/index.php/serie-s/
+- Les liens directs sont hébergés sur le domaine cripen.dj.
+- Afficher séparément le sujet et son corrigé ; ne jamais associer le corrigé d'un tour à l'autre.
+- Le corrigé publié par le CRIPEN peut être étiqueté « corrigé CRIPEN ». Une résolution complémentaire produite par le Copilote doit être étiquetée « correction proposée par le Copilote — non officielle ».
+- Les PDF restent consultables à leur adresse d'origine ; ne pas les recopier dans le dépôt sans autorisation de redistribution.
+
+## 6. Soutien scolaire
 - CRIPEN : https://cripen.dj/index.php/soutien-scolaire/
 - Une ressource de lycée repérée : « Terminale S et ES : intégrale 1 ».
 
