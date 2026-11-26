@@ -166,7 +166,7 @@ sendBtn.addEventListener("click",async()=>{
 
   sendBtn.disabled=true;
   sendBtn.textContent="Envoi…";
-  statusText.textContent="ChatGPT réfléchit…";
+  statusText.textContent="Gemini réfléchit…";
   setResponse("Copilote Bac","Analyse en cours…","");
 
   try{
@@ -180,24 +180,24 @@ sendBtn.addEventListener("click",async()=>{
         imageDataUrl,
         pdfDataUrl,
         subject:selectedSubject || null,
-        conversationId
+        history:localMessages.slice(-12).map(({role,text})=>({role,text}))
       })
     });
 
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
-      throw new Error(data.error || "Impossible de joindre l'API OpenAI.");
+      throw new Error(data.error || "Impossible de joindre l'API Gemini.");
     }
 
-    conversationId=data.conversationId || conversationId;
-    if(conversationId) localStorage.setItem("copiloteConversationId",conversationId);
+    conversationId=null;
+    localStorage.removeItem("copiloteConversationId");
 
     const answer=data.answer || "Aucune réponse.";
     localMessages.push({role:"assistant",text:answer});
     saveMessages();
     renderMessages();
 
-    setResponse("Réponse du Copilote",answer,`Modèle : ${data.model || "OpenAI"}`);
+    setResponse("Réponse du Copilote",answer,`Modèle : ${data.model || "Gemini"}`);
     statusText.textContent="Réponse reçue";
     promptInput.value="";
     selectedFile=null;
@@ -215,7 +215,7 @@ sendBtn.addEventListener("click",async()=>{
     localMessages.push({role:"assistant",text:`Erreur : ${msg}`});
     saveMessages();
     renderMessages();
-    setResponse("Connexion ChatGPT",msg,"Vérifiez OPENAI_API_KEY et OPENAI_MODEL sur le serveur.");
+    setResponse("Connexion Gemini",msg,"Vérifiez GEMINI_API_KEY et GEMINI_MODEL dans les variables Vercel.");
     statusText.textContent="Erreur";
   }finally{
     sendBtn.disabled=false;
