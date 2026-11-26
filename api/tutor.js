@@ -25,3 +25,129 @@ SVT : observation -> interprétation -> connaissance -> mise en relation -> conc
 Philosophie : niveau lycée, vocabulaire simple, connecteurs logiques et structure claire.
 Style : français simple, naturel, clair et pédagogique. Ne jamais inventer une donnée illisible.
 `;
+
+function sendJson(res, status, payload) {
+  res.statusCode = status;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+  res.end(JSON.stringify(payload));
+}
+
+function validDataUrl(value, allowedTypes) {
+  if (typeof value !== "string") return false;
+  const match = value.match(/^data:([\w.+-]+\/[\w.+-]+);base64,([A-Za-z0-9+/=\r\n]+)$/);
+  return Boolean(match && allowedTypes.includes(match[1]));
+}
+
+function extractAnswer(data) {
+  if (typeof data.output_text === "string" && data.output_text.trim()) {
+    return data.output_text.trim();
+  }
+  const parts = [];
+  for (const item of data.output || []) {
+    for (const content of item.content || []) {
+      if ((content.type === "output_text" || content.type === "text") && content.text) {
+        parts.push(content.text);
+      }
+    }
+  }
+  return parts.join("\n").trim();
+}
+
+export default async function handler(req, res) {
+  if (req.method === "OPTIONS") {
+    res.setHeader("Allow", "POST, OPTIONS");
+    return sendJson(res, 200, { ok: true });
+  }
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST, OPTIONS");
+    return sendJson(res, 405, { error: "Méthode non autorisée. Utilisez POST." });
+  }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return sendJson(res, 503, {
+      error: "La clé OPENAI_API_KEY n'est pas configurée dans les variables d'environnement Vercel."
+    });
+  }
+
+  try {
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
+    const message = typeof body.message === "string" ? body.message.trim() : "";
+    const imageDataUrl = body.imageDataUrl || null;
+    const pdfDataUrl = body.pdfDataUrl || null;
+    const subject = typeof body.subject === "string" ? body.subject.trim() : "";
+    const previousResponseId = typeof body.conversationId === "string" ? body.conversationId : "";
+
+    if (!message && !imageDataUrl && !pdfDataUrl) {
+      return sendJson(res, 400, { error: "Ajoutez une consigne, une photo ou un sujet PDF." });
+    }
+    if (imageDataUrl && !validDataUrl(imageDataUrl, ["image/jpeg", "image/png", "image/webp", "image/gif"])) {
+      return sendJson(res, 400, { error: "Format de photo non accepté. Utilisez JPG, PNG ou WEBP." });
+    }
+    if (pdfDataUrl && !validDataUrl(pdfDataUrl, ["application/pdf"])) {
+      return sendJson(res, 400, { error: "Le fichier joint doit être un PDF valide." });
+    }
+
+    const content = [];
+    const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\n\n");
+    if (prompt) content.push({ type: "input_text", text: prompt });
+    if (imageDataUrl) content.push({ type: "input_image", image_url: imageDataUrl, detail: "high" });
+    if (pdfDataUrl) {
+      content.push({
+        type: "input_file",
+        filename: "sujet-eleve.pdf",
+        file_data: pdfDataUrl
+      });
+    }
+
+    const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+    const payload = {
+      model,
+      instructions: SYSTEM_PROMPT,
+      input: [{ role: "user", content }],
+      max_output_tokens: 5000
+    };
+    if (previousResponseId) payload.previous_response_id = previousResponseId;
+
+    const upstream = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + apiKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(60000)
+    });
+
+    const data = await upstream.json().catch(() => ({}));
+    if (!upstream.ok) {
+      const apiMessage = data && data.error && data.error.message
+        ? data.error.message
+        : "Le service OpenAI a refusé la requête.";
+      const status = upstream.status === 401 || upstream.status === 403 ? 502 : 502;
+      console.error("OpenAI API error:", upstream.status, apiMessage);
+      return sendJson(res, status, {
+        error: "Erreur OpenAI (" + upstream.status + ") : " + apiMessage
+      });
+    }
+
+    const answer = extractAnswer(data);
+    if (!answer) {
+      console.error("OpenAI response without text:", JSON.stringify(data).slice(0, 1500));
+      return sendJson(res, 502, { error: "OpenAI a répondu sans texte exploitable. Réessayez." });
+    }
+
+    return sendJson(res, 200, {
+      answer,
+      conversationId: data.id || previousResponseId || null,
+      model: data.model || model
+    });
+  } catch (error) {
+    console.error("Copilote tutor error:", error);
+    const message = error && error.name === "TimeoutError"
+      ? "Le délai de réponse est dépassé. Réessayez avec une photo plus légère ou une consigne plus courte."
+      : "Erreur interne du serveur Copilote. Vérifiez les variables OpenAI et les journaux Vercel.";
+    return sendJson(res, 500, { error: message });
+  }
+}
