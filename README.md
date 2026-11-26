@@ -41,10 +41,10 @@ Ne jamais prétendre qu'un contenu est CRIPEN officiel s'il ne vient pas d'une s
 - styles.css : design responsive ;
 - app.js : navigation, commandes, photo et ajout de sujet PDF ;
 - manifest.webmanifest et sw.js : base PWA installable ;
-- api/tutor.js : intégration OpenAI côté serveur.
+- api/tutor.js : intégration Google Gemini côté serveur.
 
-La clé API reste exclusivement côté serveur. Ne jamais placer OPENAI_API_KEY dans le navigateur, GitHub Actions publiques ou l'APK.
+La clé API reste exclusivement côté serveur. Ne jamais placer GEMINI_API_KEY dans le navigateur, GitHub Actions publiques ou l'APK.
 
-Le chatbot utilise l'API OpenAI via /api/tutor, avec conversation multi-tours, historique local, envoi de photos et de sujets PDF. Le modèle est configuré avec OPENAI_MODEL (valeur par défaut du code : gpt-4.1-mini).
+Le chatbot utilise l'API Google Gemini via /api/tutor, avec historique multi-tours envoyé depuis le navigateur, lecture de photos et de sujets PDF. Le modèle par défaut est gemini-3.1-flash-lite ; il peut être remplacé avec GEMINI_MODEL. La clé GEMINI_API_KEY doit être configurée côté serveur dans Vercel.
 
-Après modification des variables d'environnement, redéployer le backend.
+Après ajout ou modification des variables d'environnement, redéployer le backend. Pour obtenir une clé, utiliser https://aistudio.google.com/apikey et l'ajouter dans Vercel > Settings > Environment Variables (Production).
