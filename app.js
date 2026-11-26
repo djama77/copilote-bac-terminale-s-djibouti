@@ -136,7 +136,23 @@ removeImage.addEventListener("click",()=>{
   attachmentPreview.hidden=true;
 });
 
-function fileToDataUrl(file){
+async function fileToDataUrl(file){
+  if(file.type.startsWith("image/") && "createImageBitmap" in window){
+    try{
+      const bitmap=await createImageBitmap(file);
+      const maxSide=1800;
+      const scale=Math.min(1,maxSide/Math.max(bitmap.width,bitmap.height));
+      const canvas=document.createElement("canvas");
+      canvas.width=Math.max(1,Math.round(bitmap.width*scale));
+      canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+      const context=canvas.getContext("2d");
+      context.drawImage(bitmap,0,0,canvas.width,canvas.height);
+      bitmap.close?.();
+      return canvas.toDataURL("image/jpeg",0.82);
+    }catch(error){
+      console.warn("Compression photo impossible, envoi du fichier original.",error);
+    }
+  }
   return new Promise((resolve,reject)=>{
     const reader=new FileReader();
     reader.onload=()=>resolve(reader.result);
