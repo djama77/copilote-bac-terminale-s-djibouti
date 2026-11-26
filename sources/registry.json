@@ -1,6 +1,6 @@
 {
   "name": "CRIPEN Terminale S Source Registry",
-  "version": "1.2",
+  "version": "1.3",
   "official_sources": [
     {
       "id": "program_terminal",
@@ -26,6 +26,46 @@
         "corrections",
         "bac_simulation"
       ]
+    },
+    {
+      "id": "bac_s_math_2025_cripen",
+      "title": "Baccalauréat 2025 — Mathématiques Série S — premier et second tours : sujets et corrigés",
+      "publisher": "CRIPEN — République de Djibouti",
+      "url": "https://cripen.dj/index.php/serie-s/",
+      "priority": 2,
+      "use": [
+        "annales_mathématiques_bac_djibouti_2025",
+        "sujets_1er_et_2e_tour",
+        "corriges_et_baremes",
+        "entrainement_terminal_s"
+      ],
+      "documents": [
+        {
+          "id": "maths_s_2025_1er_sujet",
+          "type": "sujet",
+          "tour": "1er tour",
+          "url": "https://cripen.dj/wp-content/uploads/2026/04/MATHS-Bac-S-sujet-2-2025.pdf"
+        },
+        {
+          "id": "maths_s_2025_1er_corrige",
+          "type": "corrige_cripen",
+          "tour": "1er tour",
+          "url": "https://cripen.dj/wp-content/uploads/2026/04/Corrige-BAC-S_2025_MATHS.pdf"
+        },
+        {
+          "id": "maths_s_2025_2e_sujet",
+          "type": "sujet",
+          "tour": "2e tour",
+          "url": "https://cripen.dj/wp-content/uploads/2026/04/BAC-S-second-Tour-Sujet-2-2025.pdf"
+        },
+        {
+          "id": "maths_s_2025_2e_corrige",
+          "type": "corrige_cripen",
+          "tour": "2e tour",
+          "url": "https://cripen.dj/wp-content/uploads/2026/04/Corrige-BAC-S-second-Tour-Sujet-2025-.pdf"
+        }
+      ],
+      "provenance_note": "Les quatre fichiers ont été ouverts depuis les liens de la rubrique Série S du portail CRIPEN. Garder les tours séparés ; ne pas présenter une correction IA comme correction officielle."
     },
     {
       "id": "cripen_portal",
