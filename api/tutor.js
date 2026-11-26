@@ -33,25 +33,34 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
-function validDataUrl(value, allowedTypes) {
-  if (typeof value !== "string") return false;
-  const match = value.match(/^data:([\w.+-]+\/[\w.+-]+);base64,([A-Za-z0-9+/=\r\n]+)$/);
-  return Boolean(match && allowedTypes.includes(match[1]));
+function parseDataUrl(value, allowedTypes) {
+  if (typeof value !== "string") return null;
+  const match = value.match(/^data:([\\w.+-]+\\/[\\w.+-]+);base64,([A-Za-z0-9+/=\\r\\n]+)$/);
+  if (!match || !allowedTypes.includes(match[1])) return null;
+  return { mimeType: match[1], data: match[2].replace(/\\s/g, "") };
 }
 
-function extractAnswer(data) {
-  if (typeof data.output_text === "string" && data.output_text.trim()) {
-    return data.output_text.trim();
+function normalizeHistory(history, message, subject) {
+  const turns = Array.isArray(history) ? history.slice(-12) : [];
+  const contents = [];
+  for (const turn of turns) {
+    if (!turn || !["user", "assistant"].includes(turn.role) || typeof turn.text !== "string") continue;
+    const text = turn.text.trim().slice(0, 12000);
+    if (!text) continue;
+    contents.push({
+      role: turn.role === "assistant" ? "model" : "user",
+      parts: [{ text }]
+    });
   }
-  const parts = [];
-  for (const item of data.output || []) {
-    for (const content of item.content || []) {
-      if ((content.type === "output_text" || content.type === "text") && content.text) {
-        parts.push(content.text);
-      }
-    }
+
+  const latest = contents[contents.length - 1];
+  if (!latest || latest.role !== "user" || !latest.parts[0].text.includes(message)) {
+    const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\\n\\n");
+    contents.push({ role: "user", parts: [{ text: prompt }] });
+  } else if (subject && !latest.parts[0].text.startsWith("Matière choisie :")) {
+    latest.parts[0].text = "Matière choisie : " + subject + "\\n\\n" + latest.parts[0].text;
   }
-  return parts.join("\n").trim();
+  return contents;
 }
 
 export default async function handler(req, res) {
@@ -64,59 +73,57 @@ export default async function handler(req, res) {
     return sendJson(res, 405, { error: "Méthode non autorisée. Utilisez POST." });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return sendJson(res, 503, {
-      error: "La clé OPENAI_API_KEY n'est pas configurée dans les variables d'environnement Vercel."
+      error: "La clé GEMINI_API_KEY n'est pas encore configurée dans Vercel. Ajoutez-la dans les variables d'environnement du projet."
     });
   }
 
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
     const message = typeof body.message === "string" ? body.message.trim() : "";
-    const imageDataUrl = body.imageDataUrl || null;
-    const pdfDataUrl = body.pdfDataUrl || null;
     const subject = typeof body.subject === "string" ? body.subject.trim() : "";
-    const previousResponseId = typeof body.conversationId === "string" ? body.conversationId : "";
+    const imageData = body.imageDataUrl
+      ? parseDataUrl(body.imageDataUrl, ["image/jpeg", "image/png", "image/webp", "image/gif"])
+      : null;
+    const pdfData = body.pdfDataUrl
+      ? parseDataUrl(body.pdfDataUrl, ["application/pdf"])
+      : null;
 
-    if (!message && !imageDataUrl && !pdfDataUrl) {
+    if (!message && !body.imageDataUrl && !body.pdfDataUrl) {
       return sendJson(res, 400, { error: "Ajoutez une consigne, une photo ou un sujet PDF." });
     }
-    if (imageDataUrl && !validDataUrl(imageDataUrl, ["image/jpeg", "image/png", "image/webp", "image/gif"])) {
+    if (body.imageDataUrl && !imageData) {
       return sendJson(res, 400, { error: "Format de photo non accepté. Utilisez JPG, PNG ou WEBP." });
     }
-    if (pdfDataUrl && !validDataUrl(pdfDataUrl, ["application/pdf"])) {
+    if (body.pdfDataUrl && !pdfData) {
       return sendJson(res, 400, { error: "Le fichier joint doit être un PDF valide." });
     }
 
-    const content = [];
-    const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\n\n");
-    if (prompt) content.push({ type: "input_text", text: prompt });
-    if (imageDataUrl) content.push({ type: "input_image", image_url: imageDataUrl, detail: "high" });
-    if (pdfDataUrl) {
-      content.push({
-        type: "input_file",
-        filename: "sujet-eleve.pdf",
-        file_data: pdfDataUrl
-      });
-    }
+    const contents = normalizeHistory(body.history, message, subject);
+    const current = contents[contents.length - 1];
+    if (imageData) current.parts.push({ inlineData: imageData });
+    if (pdfData) current.parts.push({ inlineData: pdfData });
 
-    const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
-    const payload = {
-      model,
-      instructions: SYSTEM_PROMPT,
-      input: [{ role: "user", content }],
-      max_output_tokens: 5000
-    };
-    if (previousResponseId) payload.previous_response_id = previousResponseId;
+    const model = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
+    const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/" +
+      encodeURIComponent(model) + ":generateContent";
 
-    const upstream = await fetch("https://api.openai.com/v1/responses", {
+    const upstream = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": "Bearer " + apiKey,
+        "x-goog-api-key": apiKey,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents,
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 5000
+        }
+      }),
       signal: AbortSignal.timeout(60000)
     });
 
@@ -124,30 +131,39 @@ export default async function handler(req, res) {
     if (!upstream.ok) {
       const apiMessage = data && data.error && data.error.message
         ? data.error.message
-        : "Le service OpenAI a refusé la requête.";
-      const status = upstream.status === 401 || upstream.status === 403 ? 502 : 502;
-      console.error("OpenAI API error:", upstream.status, apiMessage);
+        : "Le service Gemini a refusé la requête.";
+      console.error("Gemini API error:", upstream.status, apiMessage);
+      const status = upstream.status === 429 ? 429 : (upstream.status === 400 ? 400 : 502);
       return sendJson(res, status, {
-        error: "Erreur OpenAI (" + upstream.status + ") : " + apiMessage
+        error: "Erreur Gemini (" + upstream.status + ") : " + apiMessage
       });
     }
 
-    const answer = extractAnswer(data);
+    const answer = (data.candidates || [])
+      .flatMap(candidate => candidate.content && candidate.content.parts ? candidate.content.parts : [])
+      .filter(part => typeof part.text === "string")
+      .map(part => part.text)
+      .join("\\n")
+      .trim();
+
     if (!answer) {
-      console.error("OpenAI response without text:", JSON.stringify(data).slice(0, 1500));
-      return sendJson(res, 502, { error: "OpenAI a répondu sans texte exploitable. Réessayez." });
+      const reason = data.promptFeedback && data.promptFeedback.blockReason
+        ? "La demande a été bloquée : " + data.promptFeedback.blockReason
+        : "Gemini a répondu sans texte exploitable. Réessayez.";
+      console.error("Gemini response without text:", JSON.stringify(data).slice(0, 1200));
+      return sendJson(res, 502, { error: reason });
     }
 
     return sendJson(res, 200, {
       answer,
-      conversationId: data.id || previousResponseId || null,
-      model: data.model || model
+      conversationId: null,
+      model
     });
   } catch (error) {
-    console.error("Copilote tutor error:", error);
+    console.error("Copilote Gemini error:", error);
     const message = error && error.name === "TimeoutError"
       ? "Le délai de réponse est dépassé. Réessayez avec une photo plus légère ou une consigne plus courte."
-      : "Erreur interne du serveur Copilote. Vérifiez les variables OpenAI et les journaux Vercel.";
+      : "Erreur interne du serveur Copilote. Consultez les journaux Vercel pour le détail.";
     return sendJson(res, 500, { error: message });
   }
 }
