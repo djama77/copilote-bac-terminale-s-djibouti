@@ -35,9 +35,9 @@ function sendJson(res, status, payload) {
 
 function parseDataUrl(value, allowedTypes) {
   if (typeof value !== "string") return null;
-  const match = value.match(/^data:([\\w.+-]+\\/[\\w.+-]+);base64,([A-Za-z0-9+/=\\r\\n]+)$/);
+  const match = value.match(/^data:([\w.+-]+\/[\w.+-]+);base64,([A-Za-z0-9+/=\r\n]+)$/);
   if (!match || !allowedTypes.includes(match[1])) return null;
-  return { mimeType: match[1], data: match[2].replace(/\\s/g, "") };
+  return { mimeType: match[1], data: match[2].replace(/\s/g, "") };
 }
 
 function normalizeHistory(history, message, subject) {
@@ -55,10 +55,10 @@ function normalizeHistory(history, message, subject) {
 
   const latest = contents[contents.length - 1];
   if (!latest || latest.role !== "user" || !latest.parts[0].text.includes(message)) {
-    const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\\n\\n");
+    const prompt = [subject ? "Matière choisie : " + subject : "", message].filter(Boolean).join("\n\n");
     contents.push({ role: "user", parts: [{ text: prompt }] });
   } else if (subject && !latest.parts[0].text.startsWith("Matière choisie :")) {
-    latest.parts[0].text = "Matière choisie : " + subject + "\\n\\n" + latest.parts[0].text;
+    latest.parts[0].text = "Matière choisie : " + subject + "\n\n" + latest.parts[0].text;
   }
   return contents;
 }
@@ -143,7 +143,7 @@ export default async function handler(req, res) {
       .flatMap(candidate => candidate.content && candidate.content.parts ? candidate.content.parts : [])
       .filter(part => typeof part.text === "string")
       .map(part => part.text)
-      .join("\\n")
+      .join("\n")
       .trim();
 
     if (!answer) {
